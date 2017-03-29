@@ -308,26 +308,43 @@ class App extends React.Component {
 
 
   render (){
-    var homepageWines = (<div className='topItemsWrapper'>
-          <div className='trendingWineListWrapper'>
-            <TopRedsList handleClickedProductEntry={this.handleClickedProductEntry} topReds = {this.state.topReds}/>
-          </div>
-          <div className='bestValueWineListWrapper'>
-            <TopWhitesList handleClickedProductEntry={this.handleClickedProductEntry} topWhites={this.state.topWhites}/>
-          </div>
+    var homepageWines = (
+      <div className='topItemsWrapper'>
+        <div className='trendingWineListWrapper'>
+          <TopRedsList handleClickedProductEntry={this.handleClickedProductEntry} topReds = {this.state.topReds}/>
+        </div>
+        <div className='bestValueWineListWrapper'>
+          <TopWhitesList handleClickedProductEntry={this.handleClickedProductEntry} topWhites={this.state.topWhites}/>
+        </div>
 
-          <div className='UvasChoiceWineListWrapper'>
-            <UvasChoiceWineList handleClickedProductEntry={this.handleClickedProductEntry} topRated={this.state.topRated}/>
-          </div>
-        </div>);
+        <div className='UvasChoiceWineListWrapper'>
+          <UvasChoiceWineList handleClickedProductEntry={this.handleClickedProductEntry} topRated={this.state.topRated}/>
+        </div>
+      </div>
+    );
 
-    var topbar =   <TopBar username={this.state.username} userLoggedIn={this.state.userLoggedIn} handleUserWantsLogin={this.handleUserWantsLogin} handleUserWantsHome={this.handleUserWantsHome} handleUserWantsLogout={this.handleUserWantsLogout} handleUserWantsSignUp={this.handleUserWantsSignUp} userWantsHomePage={this.state.userWantsHomePage} userWantsLogin={this.state.userWantsLogin} userHasSearched={this.state.userHasSearched}/>;
-    var search =  <div className = 'heroImageContainer'>
-            <div className = 'heroContentWrapper'>
-              <h2>Unbiased wine reviews</h2>
-              <Search className ='SearchBar' search = {this.search}/>
-            </div>
-          </div>
+    var topbar = (
+      <TopBar
+        username={this.state.username}
+        userLoggedIn={this.state.userLoggedIn}
+        handleUserWantsLogin={this.handleUserWantsLogin}
+        handleUserWantsHome={this.handleUserWantsHome}
+        handleUserWantsLogout={this.handleUserWantsLogout}
+        handleUserWantsSignUp={this.handleUserWantsSignUp}
+        userWantsHomePage={this.state.userWantsHomePage}
+        userWantsLogin={this.state.userWantsLogin}
+        userHasSearched={this.state.userHasSearched}
+      />
+    );
+
+    var search =  (
+      <div className = 'heroImageContainer'>
+        <div className = 'heroContentWrapper'>
+          <h2>Unbiased wine reviews</h2>
+          <Search className ='SearchBar' search = {this.search}/>
+        </div>
+      </div>
+    );
 
     if(!this.state.userWantsLogin && !this.state.userHasSearched && !this.state.userWantsSignUp){
       return (
@@ -337,40 +354,39 @@ class App extends React.Component {
             {topbar}
             {search}
           </div>
-        <div>
-
-
-          {!this.state.userClickedEntry ?
-            homepageWines : (<ProductOverview reviews={this.state.reviews} currentWine={this.state.currentWine} getReviews={this.getReviews} submitReview={this.submitReview}/>)
-          }
+          <div>
+            {!this.state.userClickedEntry ?
+              homepageWines : (<ProductOverview reviews={this.state.reviews} currentWine={this.state.currentWine} getReviews={this.getReviews} submitReview={this.submitReview}/>)
+            }
+          </div>
         </div>
-      </div>
-    )} else if (this.state.userWantsLogin && !this.state.userHasSearched) {
-        //To do: refactor handleUserWantsHome
-        return (
-          <div className = 'container'>
-            <div className='heroFullPage'>
+      );
+    } else if (this.state.userWantsLogin && !this.state.userHasSearched) {
+      //To do: refactor handleUserWantsHome
+      return (
+        <div className = 'container'>
+          <div className='heroFullPage'>
+          {topbar}
+            <div className = 'loginWrapper' >
+                <a href="/login/facebook">Log In with Facebook</a>
+                <Login checkUsername = {this.checkUsername} invalidUsername = {this.state.invalidUsername} newUser={this.newUser} invalidPasswordAttempt={this.state.invalidPasswordAttempt} validate={this.validateUser} handleUserWantsHome={this.handleUserWantsLogin} userWantsLogin={this.state.userWantsLogin} userWantsSignUp={this.state.userWantsSignUp} className = 'loginForm' />
+            </div>
+          </div>
+        </div>
+      )
+    } else if (this.state.userHasSearched) {
+      return (
+
+        <div className="container login">
+          <div className = 'topBackgroundImageWrapper'>
             {topbar}
-              <div className = 'loginWrapper' >
-                  <a href="/login/facebook">Log In with Facebook</a>
-                  <Login checkUsername = {this.checkUsername} invalidUsername = {this.state.invalidUsername} newUser={this.newUser} invalidPasswordAttempt={this.state.invalidPasswordAttempt} validate={this.validateUser} handleUserWantsHome={this.handleUserWantsLogin} userWantsLogin={this.state.userWantsLogin} userWantsSignUp={this.state.userWantsSignUp} className = 'loginForm' />
-              </div>
-            </div>
+            {search}
           </div>
-          )
-      } else if (this.state.userHasSearched) {
-        return (
 
-          <div className="container login">
-            <div className = 'topBackgroundImageWrapper'>
-              {topbar}
-              {search}
-            </div>
-
-            <ProductList handleUserWantsProductList={this.handleUserWantsProductList} searchHistory={this.state.searchHistory} reviews={this.state.reviews} getReviews={this.getReviews} products={this.state.products} submitReview={this.submitReview} userHasSearched={this.state.userHasSearched} userWantsProductList={this.state.userWantsProductList}/>
-          </div>
-          )
-      } else if (this.state.userWantsSignUp) {
+          <ProductList handleUserWantsProductList={this.handleUserWantsProductList} searchHistory={this.state.searchHistory} reviews={this.state.reviews} getReviews={this.getReviews} products={this.state.products} submitReview={this.submitReview} userHasSearched={this.state.userHasSearched} userWantsProductList={this.state.userWantsProductList}/>
+        </div>
+        )
+    } else if (this.state.userWantsSignUp) {
       return(
         <div className='container'>
           <div className='heroFullPage'>
@@ -380,7 +396,7 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-      )
+      );
     }
   }
 }

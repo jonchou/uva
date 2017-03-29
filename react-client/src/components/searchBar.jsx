@@ -14,24 +14,23 @@ class SearchBar extends React.Component {
 
 
   handlePriceClick(event) {
-
     var price = 10;
 
-    if(event.target.value === '$'){
+    if (event.target.value === '$'){
       price = 10;
     } else if (event.target.value === '$$'){
       price = 20;
-    }else if (event.target.value === '$$$'){
-      price = 30;
-    }else if (event.target.value === '$$$$'){
+    } else if (event.target.value === '$$$'){
       price = 40;
+    } else if (event.target.value === '$$$$'){
+      price = 80;
     }
 
     this.setState({
       price: price
-    })
+    });
 
-    event.preventDefault()
+    event.preventDefault();
   }
 
   handleSearchSubmit (event) {
@@ -43,7 +42,7 @@ class SearchBar extends React.Component {
       this.props.search(search, price);
       this.setState({
         searchQuery: '',
-      })
+      });
     }
     event.preventDefault();
   }
@@ -57,22 +56,22 @@ class SearchBar extends React.Component {
 
 
 
-render(){
-  return(
-    <form className = 'searchBarForm' onSubmit={this.handleSearchSubmit}>
-      <input className = 'mainSearchBar' onChange={this.handleSearchChange} placeholder = 'Rose, Zin, Napa Valley, France...' value={this.state.searchQuery} />
-      <div className="priceButtons">
-        <input type='button' value='$' onClick={this.handlePriceClick}></input>
-        <input type='button' value='$$' onClick={this.handlePriceClick}></input>
-        <input type='button' value='$$$' onClick={this.handlePriceClick}></input>
-        <input type='button' value='$$$$' onClick={this.handlePriceClick}></input>
-      </div>
+  render() {
+    return (
+      <form className = 'searchBarForm' onSubmit={this.handleSearchSubmit}>
+        <input className = 'mainSearchBar' onChange={this.handleSearchChange} placeholder = 'Rose, Zin, Napa Valley, France...' value={this.state.searchQuery} />
+        <div className="priceButtons">
+          <input type='button' value='$' onClick={this.handlePriceClick}></input>
+          <input type='button' value='$$' onClick={this.handlePriceClick}></input>
+          <input type='button' value='$$$' onClick={this.handlePriceClick}></input>
+          <input type='button' value='$$$$' onClick={this.handlePriceClick}></input>
+        </div>
 
-      <div className='submitButton'>
-        <input type='submit' value='Submit' />
-      </div>
-    </form>
-    )
+        <div className='submitButton'>
+          <input type='submit' value='Submit' />
+        </div>
+      </form>
+    );
   }
 }
 

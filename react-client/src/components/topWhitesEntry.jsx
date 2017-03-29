@@ -5,10 +5,11 @@ var TopWhitesEntry = (props) => (
    <div className='entryFlexItem' >
      <h4>{props.topWhite.name}</h4>
      <p>Released: {props.topWhite.year}</p>
-     <p> Best Price: ${props.topWhite.priceMin}</p>
+     <p>Best Price: ${props.topWhite.priceMin}</p>
    </div>
    <div className='entryFlexItem flexItemRight'>
-     <p>Avg Rating: <h4 className='entryRating'>{props.topWhite.apiRating/20}</h4></p>
+     <p>Avg Rating</p>
+     <h4 className='entryRating'>{props.topWhite.apiRating/20}</h4>
    </div>
  </div>
 );

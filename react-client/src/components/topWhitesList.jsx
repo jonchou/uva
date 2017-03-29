@@ -16,12 +16,15 @@ class TopWhitesList extends React.Component {
         <ol>
           {this.props.topWhites.map(topWhite =>
             <li key={topWhite._id}>
-            <TopWhitesEntry  handleClickedProductEntry={this.props.handleClickedProductEntry} topWhite={topWhite}/>
+              <TopWhitesEntry
+                handleClickedProductEntry={this.props.handleClickedProductEntry}
+                topWhite={topWhite}
+              />
             </li>
           )}
         </ol>
       </div>
-    )
+    );
   }
 }
 
