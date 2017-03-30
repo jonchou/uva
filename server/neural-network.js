@@ -9,5 +9,3 @@ module.exports.train = (NN, trainingSet) => {
   newUserTrainer.train(trainingSet);
   return NN;
 }
-
-
