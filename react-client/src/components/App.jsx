@@ -6,7 +6,7 @@ import ProductList from './productList.jsx';
 import TopBar from './TopBar.jsx';
 import ProductOverview from './productOverview.jsx';
 import Questionnaire from './Questionnaire.jsx';
-import HomepageWines from './HomepageWines.jsx';
+import HomePageWines from './HomePageWines.jsx';
 
 import {
   BrowserRouter as Router,
@@ -20,7 +20,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       products: [],
-      reviews: [],
+      // reviews: [],
       topReds: [],
       topWhites: [],
       topRated: [],
@@ -92,7 +92,11 @@ class App extends React.Component {
 
   getReviews(product_id){
     var context = this;
-    console.log('this is the key', product_id)
+    console.log('this is the key', product_id);
+    // temporary fix to not infinitely loop through ajax calls
+    if (this.state.reviews) {
+      return;
+    }
     $.ajax({
       url: '/reviews',
       type: 'POST',
@@ -139,7 +143,7 @@ class App extends React.Component {
     })
   }
 
-  
+
   search (query, price) {
     var context = this;
     var searchHistory = this.state.searchHistory;
@@ -178,18 +182,19 @@ class App extends React.Component {
 
   showHomePageWines () {
     if (!this.state.userClickedEntry) {
-      return <HomepageWines 
+      return <HomePageWines
               topReds={this.state.topReds} 
               topWhites={this.state.topWhites} 
               topRated={this.state.topRated}
               handleClickedProductEntry={this.handleClickedProductEntry}
               />;
     } else {
-      return <ProductOverview 
-              reviews={this.state.reviews} 
-              currentWine={this.state.currentWine} 
-              getReviews={this.getReviews} 
-              submitReview={this.submitReview}/>;
+      return <ProductOverview
+              reviews={this.state.reviews}
+              currentWine={this.state.currentWine}
+              getReviews={this.getReviews}
+              submitReview={this.submitReview}
+            />;
     }
   }
 
@@ -205,15 +210,6 @@ class App extends React.Component {
       })
     }
   }
-
-
-  // showProductsList() {
-    // if (this.state.userHasSearched) {
-      // return ProductList;
-    // }
-    
-
-  // }
 
   render () {
       
@@ -231,11 +227,20 @@ class App extends React.Component {
       )
 
       const Homepage = () => (
-        <HomepageWines 
+        <HomePageWines
           topReds={this.state.topReds} 
           topWhites={this.state.topWhites} 
           topRated={this.state.topRated}
           handleClickedProductEntry={this.handleClickedProductEntry}
+        />
+      )
+
+      const ProductOverviewComp = () => (
+        <ProductOverview
+          reviews={this.state.reviews}
+          currentWine={this.state.currentWine}
+          getReviews={this.getReviews}
+          submitReview={this.submitReview}
         />
       )
 
@@ -268,6 +273,7 @@ class App extends React.Component {
 
               <Route exact path='/' component={Homepage}/>
               <Route path='/products' component={Products}/>
+              <Route path='/product/overview' component={ProductOverviewComp}/>
               <Route path='/dummy' component={Dummy} />
           </div>
         </Router>

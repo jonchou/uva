@@ -74,7 +74,7 @@ class ProductOverview extends React.Component{
               <input type="button" value="Write a review" onClick={this.handleUserWantsReview} className="productOverviewFlexitem" />
             </div>
             <div>
-              {this.props.reviews.length === 0 &&
+              {!this.props.reviews &&
                 <h4> Be the first to Review this Wine!</h4>
               }
             </div>

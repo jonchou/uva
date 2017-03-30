@@ -1,6 +1,5 @@
 import React from 'react';
 import WineList from './WineList.jsx';
-import UvasChoiceWineList from './uvasChoiceWineList.jsx';
 
 var HomePageWines = ({topReds, topWhites, topRated, handleClickedProductEntry}) => (
   <div className='topItemsWrapper'>
@@ -18,7 +17,7 @@ var HomePageWines = ({topReds, topWhites, topRated, handleClickedProductEntry}) 
     </div>
 
     <div className='UvasChoiceWineListWrapper'>
-      <UvasChoiceWineList
+      <WineList
         handleClickedProductEntry={handleClickedProductEntry}
         topRated={topRated}
       />

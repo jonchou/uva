@@ -14,6 +14,10 @@ html {
   background-size: cover;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 
 h1 {
