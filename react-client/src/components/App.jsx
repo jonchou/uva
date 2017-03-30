@@ -49,7 +49,7 @@ class App extends React.Component {
     this.init = this.init.bind(this);
     this.handleUserWantsProductList = this.handleUserWantsProductList.bind(this);
     this.handleClickedProductEntry = this.handleClickedProductEntry.bind(this);
-    this.showProductsList = this.showProductsList.bind(this);
+    // this.showProductsList = this.showProductsList.bind(this);
   }
 
   componentDidMount(){
@@ -66,27 +66,6 @@ class App extends React.Component {
     })
   }
 
-
-  // handleUserWantsLogin(event) {
-  //   this.setState({
-  //     userWantsLogin: true,
-  //     invalidPasswordAttempt: false,
-  //     userWantsHomePage: false,
-  //     userHasSearched: false,
-  //     userWantsProductList: false,
-  //   })
-  // }
-
-  // handleUserWantsLogout(event) {
-  //   this.setState({
-  //     userLoggedIn: false,
-  //     userWantsHomePage: true,
-  //     userWantsProductList: false,
-  //     userWantsLogin: false,
-  //     username: '',
-  //     userID: ''
-  //   })
-  // }
 
   handleUserWantsProductList(event){
     console.log('inside  product list handler')
@@ -229,24 +208,44 @@ class App extends React.Component {
   }
 
 
-  showProductsList() {
-    if (this.state.userHasSearched) {
-      const ProductList = <ProductList 
-        handleUserWantsProductList={this.handleUserWantsProductList} 
-        searchHistory={this.state.searchHistory} 
-        reviews={this.state.reviews} 
-        getReviews={this.getReviews} 
-        products={this.state.products} 
-        submitReview={this.submitReview} 
-        userHasSearched={this.state.userHasSearched} 
-        userWantsProductList={this.state.userWantsProductList}
+  // showProductsList() {
+    // if (this.state.userHasSearched) {
+      // return ProductList;
+    // }
+    
+
+  // }
+
+  render () {
+      
+      const Products = () => (
+        <ProductList 
+          handleUserWantsProductList={this.handleUserWantsProductList} 
+          searchHistory={this.state.searchHistory} 
+          reviews={this.state.reviews} 
+          getReviews={this.getReviews} 
+          products={this.state.products} 
+          submitReview={this.submitReview} 
+          userHasSearched={this.state.userHasSearched} 
+          userWantsProductList={this.state.userWantsProductList}
         />
-      return ProductList;
-    }
+      )
 
-  }
+      const Homepage = () => (
+        <HomepageWines 
+          topReds={this.state.topReds} 
+          topWhites={this.state.topWhites} 
+          topRated={this.state.topRated}
+          handleClickedProductEntry={this.handleClickedProductEntry}
+        />
+      )
 
-  render (){
+      const Dummy = () => (
+        <div>
+          <h2>Hello World</h2>
+        </div>
+      )
+
     return (
       <div className = 'container'>
         <div className = 'topBackgroundImageWrapper'>
@@ -258,10 +257,22 @@ class App extends React.Component {
           />
           <Search search={this.search} />
         </div>
-        {this.showHomePageWines()}
-        {this.showProductsList()}
-      </div>
+        <Router>
+          <div>
+            <ul>
+              <li><Link to='/'>Home</Link></li>
+              <li><Link to='/products'>Products</Link></li>
+              <li><Link to='/dummy'>Dummy</Link></li>
+            </ul>
+          
+            <hr/>
 
+              <Route exact path='/' component={Homepage}/>
+              <Route path='/products' component={Products}/>
+              <Route path='/dummy' component={Dummy} />
+          </div>
+        </Router>
+      </div>
     )
   }
 }
