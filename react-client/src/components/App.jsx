@@ -11,7 +11,6 @@ import UvasChoiceWineList from './uvasChoiceWineList.jsx';
 import ProductOverview from './productOverview.jsx';
 import Questionnaire from './Questionnaire.jsx';
 
-
 class App extends React.Component {
   constructor (props) {
     super(props);
@@ -293,10 +292,13 @@ class App extends React.Component {
     }
   }
 
-
   render() {
+
     var homepageWines = (
       <div className='topItemsWrapper'>
+        <div>
+          <Questionnaire />
+        </div>
         <div className='trendingWineListWrapper'>
           <TopRedsList handleClickedProductEntry={this.handleClickedProductEntry} topReds = {this.state.topReds}/>
         </div>
@@ -320,7 +322,7 @@ class App extends React.Component {
       </div>
     );
 
-    if(!this.state.userWantsLogin && !this.state.userHasSearched) {
+    if (!this.state.userWantsLogin && !this.state.userHasSearched) {
       return (
         <div className = 'container'>
           <div className = 'topBackgroundImageWrapper'>
@@ -328,37 +330,34 @@ class App extends React.Component {
             <a href="/login/facebook">Sign Up or Login with Facebook</a>
             {search}
           </div>
-        <div>
-          {!this.state.userClickedEntry ?
-            homepageWines : (<ProductOverview reviews={this.state.reviews} currentWine={this.state.currentWine} getReviews={this.getReviews} submitReview={this.submitReview}/>)
-          }
+          <div>
+            {!this.state.userClickedEntry ?
+              homepageWines : (<ProductOverview reviews={this.state.reviews} currentWine={this.state.currentWine} getReviews={this.getReviews} submitReview={this.submitReview}/>)
+            }
+          </div>
         </div>
-      </div>
-    )} else if (this.state.userWantsLogin && !this.state.userHasSearched) {
-        //To do: refactor handleUserWantsHome
-        return (
-          <div className = 'container'>
-            <div className='heroFullPage'>
+      )
+    } else if (this.state.userWantsLogin && !this.state.userHasSearched) {
+      return (
+        <div className = 'container'>
+          <div className='heroFullPage'>
+          {topbar}
+            <div className = 'loginWrapper'>
+              <Login checkUsername = {this.checkUsername} invalidUsername = {this.state.invalidUsername} newUser={this.newUser} invalidPasswordAttempt={this.state.invalidPasswordAttempt} validate={this.validateUser} handleUserWantsHome={this.handleUserWantsLogin} userWantsLogin={this.state.userWantsLogin} />
+            </div>
+          </div>
+        </div>
+      )
+    } else if (this.state.userHasSearched) {
+      return (
+        <div className="container login">
+          <div className = 'topBackgroundImageWrapper'>
             {topbar}
-              <div className = 'loginWrapper'>
-                  <Login checkUsername = {this.checkUsername} invalidUsername = {this.state.invalidUsername} newUser={this.newUser} invalidPasswordAttempt={this.state.invalidPasswordAttempt} validate={this.validateUser} handleUserWantsHome={this.handleUserWantsLogin} userWantsLogin={this.state.userWantsLogin} />
-              </div>
-            </div>
+            {search}
           </div>
-          )
-      } else if (this.state.userHasSearched) {
-        return (
-
-          <div className="container login">
-            <div className = 'topBackgroundImageWrapper'>
-              {topbar}
-              {search}
-            </div>
-
-            <ProductList handleUserWantsProductList={this.handleUserWantsProductList} searchHistory={this.state.searchHistory} reviews={this.state.reviews} getReviews={this.getReviews} products={this.state.products} submitReview={this.submitReview} userHasSearched={this.state.userHasSearched} userWantsProductList={this.state.userWantsProductList}/>
-          </div>
-          )
-
+          <ProductList handleUserWantsProductList={this.handleUserWantsProductList} searchHistory={this.state.searchHistory} reviews={this.state.reviews} getReviews={this.getReviews} products={this.state.products} submitReview={this.submitReview} userHasSearched={this.state.userHasSearched} userWantsProductList={this.state.userWantsProductList}/>
+        </div>
+      )
     }
   }
 }
