@@ -1,6 +1,5 @@
 import React from 'react';
 import Search from './SearchBar.jsx';
-import TopWine from './topWines.jsx';
 import $ from 'jquery';
 import Login from './loginForm.jsx';
 import ProductList from './productList.jsx';
@@ -13,7 +12,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 
 class App extends React.Component {
