@@ -14,7 +14,6 @@ import {
   Link
 } from 'react-router-dom';
 
-
 class App extends React.Component {
   constructor (props) {
     super(props);
@@ -64,7 +63,6 @@ class App extends React.Component {
       userClickedEntry: false,
     })
   }
-
 
   handleUserWantsProductList(event){
     console.log('inside  product list handler')
@@ -142,7 +140,6 @@ class App extends React.Component {
       }
     })
   }
-
 
   search (query, price) {
     var context = this;
@@ -268,9 +265,7 @@ class App extends React.Component {
               <li><Link to='/products'>Products</Link></li>
               <li><Link to='/dummy'>Dummy</Link></li>
             </ul>
-          
             <hr/>
-
               <Route exact path='/' component={Homepage}/>
               <Route path='/products' component={Products}/>
               <Route path='/product/overview' component={ProductOverviewComp}/>
@@ -283,4 +278,3 @@ class App extends React.Component {
 }
 
 export default App;
-

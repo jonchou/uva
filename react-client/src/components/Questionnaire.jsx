@@ -9,7 +9,7 @@ class Questionnaire extends React.Component {
   render () {
     return (
       <div>
-        <h2>Help Us Give You Great Recommentations</h2>
+        <h2>Help Us Give You Great Recommendations</h2>
         <form action="http://localhost:3000/train" method='POST'>
           <div>
             Please check each wine type that you enjoy drinking (if you don't know leave it blank)
