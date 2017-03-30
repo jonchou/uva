@@ -4,7 +4,7 @@ import WineListEntry from './WineListEntry.jsx';
 var WineList = ({handleClickedProductEntry, wines}) => (
   <div className='bestCategory trendingCategory'>
     <ol>
-      {wines.map(wine =>
+      {wines && wines.map(wine =>
         <li key={wine._id}>
           <WineListEntry
             handleClickedProductEntry={handleClickedProductEntry}
