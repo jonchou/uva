@@ -9,7 +9,8 @@ class Questionnaire extends React.Component {
   render () {
     return (
       <div>
-        
+        Which type of wine do you 
+
       </div>
     )
   }
