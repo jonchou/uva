@@ -57,18 +57,19 @@ app.get('/login/facebook/callback',
 
 app.get('/init', requesthandler.init);
 app.options('*', cors());
-app.options('/users/username/');
 app.get('/getWines', requesthandler.getWines);
 app.post('/search', requesthandler.search);
-app.post('/signup', requesthandler.signup);
-app.post('/users/username/', requesthandler.usersUsername);
-app.post('/login', requesthandler.login);
 app.post('/review', requesthandler.review);
 app.post('/reviews', requesthandler.reviews);
-
 
 var port = process.env.PORT || 3000;
 
 app.listen(port, function() {
   console.log('listening to port ' + port);
 });
+
+
+// app.post('/users/username/', requesthandler.usersUsername);
+// app.post('/signup', requesthandler.signup);
+// app.post('/login', requesthandler.login);
+// app.options('/users/username/');
