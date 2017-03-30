@@ -8,7 +8,7 @@ class TopBar extends React.Component {
 
   render(){
     var signup = (<button className='flexItem flexEdge' onClick={this.props.handleUserWantsSignUp} value='signup'>Sign Up</button>);
-    var home =    (<button onClick={this.props.handleUserWantsHome} className='flexItem flexEdge' value='login'>Home</button>);
+    var home = (<button onClick={this.props.handleUserWantsHome} className='flexItem flexEdge' value='login'>Home</button>);
 
     return(
     <div className='flexContainer'>

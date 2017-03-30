@@ -9,6 +9,7 @@ import TopRedsList from './topRedsList.jsx';
 import TopWhitesList from './topWhitesList.jsx';
 import UvasChoiceWineList from './uvasChoiceWineList.jsx';
 import ProductOverview from './productOverview.jsx';
+import Questionnaire from './Questionnaire.jsx';
 
 
 class App extends React.Component {
@@ -33,7 +34,8 @@ class App extends React.Component {
       invalidUsername: false,
       userWantsProductList: false,
       userClickedEntry: false,
-      currentWine: null
+      currentWine: null,
+      questionnaire: false
     }
 
     this.search = this.search.bind(this);
@@ -292,40 +294,41 @@ class App extends React.Component {
   }
 
 
-  render (){
-    var homepageWines = (<div className='topItemsWrapper'>
-          <div className='trendingWineListWrapper'>
-            <TopRedsList handleClickedProductEntry={this.handleClickedProductEntry} topReds = {this.state.topReds}/>
-          </div>
-          <div className='bestValueWineListWrapper'>
-            <TopWhitesList handleClickedProductEntry={this.handleClickedProductEntry} topWhites={this.state.topWhites}/>
-          </div>
+  render() {
+    var homepageWines = (
+      <div className='topItemsWrapper'>
+        <div className='trendingWineListWrapper'>
+          <TopRedsList handleClickedProductEntry={this.handleClickedProductEntry} topReds = {this.state.topReds}/>
+        </div>
+        <div className='bestValueWineListWrapper'>
+          <TopWhitesList handleClickedProductEntry={this.handleClickedProductEntry} topWhites={this.state.topWhites}/>
+        </div>
+        <div className='UvasChoiceWineListWrapper'>
+          <UvasChoiceWineList handleClickedProductEntry={this.handleClickedProductEntry} topRated={this.state.topRated}/>
+        </div>
+      </div>
+    );
 
-          <div className='UvasChoiceWineListWrapper'>
-            <UvasChoiceWineList handleClickedProductEntry={this.handleClickedProductEntry} topRated={this.state.topRated}/>
-          </div>
-        </div>);
+    var topbar = <TopBar username={this.state.username} userLoggedIn={this.state.userLoggedIn} handleUserWantsLogin={this.handleUserWantsLogin} userHasSearched={this.state.userHasSearched}/>;
+    
+    var search = (
+      <div className = 'heroImageContainer'>
+        <div className = 'heroContentWrapper'>
+          <h2>Unbiased wine reviews</h2>
+          <Search className ='SearchBar' search = {this.search}/>
+        </div>
+      </div>
+    );
 
-    var topbar =   <TopBar username={this.state.username} userLoggedIn={this.state.userLoggedIn} handleUserWantsLogin={this.handleUserWantsLogin} userHasSearched={this.state.userHasSearched}/>;
-    var search =  <div className = 'heroImageContainer'>
-            <div className = 'heroContentWrapper'>
-              <h2>Unbiased wine reviews</h2>
-              <Search className ='SearchBar' search = {this.search}/>
-            </div>
-          </div>
-
-    if(!this.state.userWantsLogin && !this.state.userHasSearched){
+    if(!this.state.userWantsLogin && !this.state.userHasSearched) {
       return (
         <div className = 'container'>
-
           <div className = 'topBackgroundImageWrapper'>
             {topbar}
             <a href="/login/facebook">Sign Up or Login with Facebook</a>
             {search}
           </div>
         <div>
-
-
           {!this.state.userClickedEntry ?
             homepageWines : (<ProductOverview reviews={this.state.reviews} currentWine={this.state.currentWine} getReviews={this.getReviews} submitReview={this.submitReview}/>)
           }
@@ -337,8 +340,7 @@ class App extends React.Component {
           <div className = 'container'>
             <div className='heroFullPage'>
             {topbar}
-              <div className = 'loginWrapper' >
-                  
+              <div className = 'loginWrapper'>
                   <Login checkUsername = {this.checkUsername} invalidUsername = {this.state.invalidUsername} newUser={this.newUser} invalidPasswordAttempt={this.state.invalidPasswordAttempt} validate={this.validateUser} handleUserWantsHome={this.handleUserWantsLogin} userWantsLogin={this.state.userWantsLogin} />
               </div>
             </div>
