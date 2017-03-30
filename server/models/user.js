@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var db = require('../../database-mongo/index.js');
 var User = require('../../database-mongo/models/User');
+const NN = require('../neural-network.js');
 
 module.exports.findUser = (username) => {
   return User.find({name: username}, (err, user) => {
@@ -15,6 +16,7 @@ module.exports.findUser = (username) => {
 }
 
 module.exports.createUser = (username, accessToken) => {
+  let profile = NN.newUserNN().toJSON();
   return User.create({
     name: username,
     joined: new Date(),
@@ -22,7 +24,8 @@ module.exports.createUser = (username, accessToken) => {
     meta: {
       reviews: 0,
       friends: 0
-    }
+    },
+    recommendation_profile: profile
   }, (err, user) => {
     return new Promise((resolve, reject) => {
       if (err) {

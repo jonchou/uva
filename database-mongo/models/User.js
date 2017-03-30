@@ -9,7 +9,7 @@ var userSchema = mongoose.Schema({
     reviews: Number,
     friends: Number
   },
-  recommendation_profile: String
+  recommendation_profile: Object
 });
 
 // userSchema.plugin(findOrCreate);
