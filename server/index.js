@@ -67,9 +67,3 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('listening to port ' + port);
 });
-
-
-// app.post('/users/username/', requesthandler.usersUsername);
-// app.post('/signup', requesthandler.signup);
-// app.post('/login', requesthandler.login);
-// app.options('/users/username/');

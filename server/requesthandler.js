@@ -124,39 +124,3 @@ module.exports.reviews = function(req, res) {
     }
   })
 }
-
-
-// module.exports.login = function(req, res) {
-//   var username = req.body.username;
-//   var password = req.body.password;
-// }
-
-//   User.validateUser(username, password, function(error, results) {
-//     if(error){
-//       console.log(error)
-//     } else {
-//       res.send(results);
-//     }
-//   })
-
-// module.exports.signup = function(req, res) {
-//   var user = req.body.username;
-//   var pass = req.body.password;
-
-//   //check for valid username, i.e. currently not in use
-//   User.checkuserName(user, function(error, valid, results){
-//     if(error){
-//       res.send('error inside checkuserName index');
-//     } else if (!valid) {
-//       res.send('duplicate username')
-//     } else if (valid) {
-//       User.addUser(user, pass, function(error, success, results){
-//         if(error) {
-//           res.send('error inside addUser index.js');
-//         } else if (success) {
-//           res.send(results);
-//         }
-//       })
-//     }
-//   })
-// }
