@@ -259,7 +259,11 @@ class App extends React.Component {
             handleUserWantsLogin={this.handleUserWantsLogin} 
             userHasSearched={this.state.userHasSearched}
           />
-          <Search search={this.search} />
+          <div className = 'heroImageContainer'>
+            <div className = 'heroContentWrapper'>
+              <Search className ='SearchBar' search={this.search} />
+            </div>
+          </div>
         </div>
         <Router>
           <div>
@@ -271,10 +275,10 @@ class App extends React.Component {
           
             <hr/>
 
-              <Route exact path='/' component={Homepage}/>
-              <Route path='/products' component={Products}/>
-              <Route path='/product/overview' component={ProductOverviewComp}/>
-              <Route path='/dummy' component={Dummy} />
+            <Route exact path='/' component={Homepage}/>
+            <Route path='/products' component={Products}/>
+            <Route path='/product/overview' component={ProductOverviewComp}/>
+            <Route path='/dummy' component={Dummy} />
           </div>
         </Router>
       </div>
