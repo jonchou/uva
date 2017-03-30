@@ -21,6 +21,8 @@ passport.use(new FacebookStrategy({
 var app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(cors());
 app.use(require('cookie-parser')());
 app.use(require('express-session')({secret: 'keyboard cat', resave: true, saveUninitialized: true}));
@@ -47,6 +49,11 @@ passport.deserializeUser((obj, cb) => {
   cb(null, obj);
 });
 
+app.post('/train', function(req, res) {
+  console.log('body: ', req.body);
+  res.send('received form data');
+});
+
 app.get('/login/facebook',
   passport.authenticate('facebook'));
 
@@ -58,6 +65,7 @@ app.get('/login/facebook/callback',
 );
 
 app.get('/init', requesthandler.init);
+
 app.options('*', cors());
 app.options('/users/username/');
 app.get('/getWines', requesthandler.getWines);
@@ -67,7 +75,6 @@ app.post('/users/username/', requesthandler.usersUsername);
 app.post('/login', requesthandler.login);
 app.post('/review', requesthandler.review);
 app.post('/reviews', requesthandler.reviews);
-
 
 var port = process.env.PORT || 3000;
 
