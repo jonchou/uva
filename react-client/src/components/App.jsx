@@ -1,15 +1,20 @@
 import React from 'react';
-import Search from './searchBar.jsx';
+import Search from './SearchBar.jsx';
 import TopWine from './topWines.jsx';
 import $ from 'jquery';
 import Login from './loginForm.jsx';
 import ProductList from './productList.jsx';
 import TopBar from './TopBar.jsx';
-import TopRedsList from './topRedsList.jsx';
-import TopWhitesList from './topWhitesList.jsx';
-import UvasChoiceWineList from './uvasChoiceWineList.jsx';
 import ProductOverview from './productOverview.jsx';
 import Questionnaire from './Questionnaire.jsx';
+import HomepageWines from './HomepageWines.jsx';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
 
 class App extends React.Component {
   constructor (props) {
@@ -37,17 +42,14 @@ class App extends React.Component {
     }
 
     this.search = this.search.bind(this);
-    // this.handleUserWantsLogin = this.handleUserWantsLogin.bind(this);
-    // this.validateUser = this.validateUser.bind(this);
-    // this.newUser = this.newUser.bind(this);
-    // this.handleUserWantsLogout = this.handleUserWantsLogout.bind(this);
-    // this.checkUsername = this.checkUsername.bind(this);
+    this.showHomePageWines = this.showHomePageWines.bind(this);
     this.handleUserWantsHome = this.handleUserWantsHome.bind(this);
     this.submitReview = this.submitReview.bind(this);
     this.getReviews = this.getReviews.bind(this);
     this.init = this.init.bind(this);
     this.handleUserWantsProductList = this.handleUserWantsProductList.bind(this);
     this.handleClickedProductEntry = this.handleClickedProductEntry.bind(this);
+    // this.showProductsList = this.showProductsList.bind(this);
   }
 
   componentDidMount(){
@@ -64,27 +66,6 @@ class App extends React.Component {
     })
   }
 
-
-  handleUserWantsLogin(event) {
-    this.setState({
-      userWantsLogin: true,
-      invalidPasswordAttempt: false,
-      userWantsHomePage: false,
-      userHasSearched: false,
-      userWantsProductList: false,
-    })
-  }
-
-  // handleUserWantsLogout(event) {
-  //   this.setState({
-  //     userLoggedIn: false,
-  //     userWantsHomePage: true,
-  //     userWantsProductList: false,
-  //     userWantsLogin: false,
-  //     username: '',
-  //     userID: ''
-  //   })
-  // }
 
   handleUserWantsProductList(event){
     console.log('inside  product list handler')
@@ -159,89 +140,7 @@ class App extends React.Component {
     })
   }
 
-  // validateUser (username, password) {
-  //   var context = this;
-
-  //    $.ajax({
-  //      url: '/login',
-  //      type: 'POST',
-  //      contentType: 'application/json',
-  //      data: JSON.stringify({
-  //        username: username,
-  //        password: password
-  //      }),
-  //      success: function(data){
-  //        if(data.length===0){
-  //         console.log('zeroData');
-  //         context.setState({
-  //           invalidPasswordAttempt: true
-  //         })
-  //        } else {
-  //          context.setState({
-  //           userLoggedIn: !context.state.userLoggedIn,
-  //           username: data[0].name,
-  //           userID: data[0]._id,
-  //           userWantsLogin: !context.state.userWantsLogin,
-  //           invalidPasswordAttempt: false
-  //          });
-  //        }
-  //      },
-  //      error: function(err){
-  //        console.log('error after validateUser', err);
-  //      }
-  //    })
-  //  }
-
-   // checkUsername (username) {
-   //  var context = this;
-   //  $.ajax({
-   //    url: '/users/username',
-   //    type: 'POST',
-   //    contentType: 'application/json',
-   //    data: JSON.stringify({
-   //      username: username
-   //    }),
-   //    success: function(data){
-   //      if(data.length > 0) {
-   //        context.setState({
-   //          invalidUsername: true
-   //        })
-   //      } else {
-   //        context.setState({
-   //          invalidUsername: false
-   //        })
-   //      }
-   //    }
-   //  })
-   // }
-
-   // newUser (username, password) {
-   //  var context = this;
-   //  $.ajax({
-   //    url: '/signup',
-   //    type: 'POST',
-   //    contentType: 'application/json',
-   //    data: JSON.stringify({
-   //      username: username,
-   //      password: password
-   //    }),
-   //    success: function(data) {
-   //      console.log('success response from newUserAJAX', data)
-   //      context.setState({
-   //        userWantsHomePage: true,
-   //        userWantsLogin: false,
-   //        userWantsProductList: false,
-   //        username: data.name,
-   //        userID: data._id,
-   //        userLoggedIn: true
-   //      })
-   //    },
-   //    error: function(error) {
-   //      console.log('error in adding user', error);
-   //    }
-   //  })
-   // }
-
+  
   search (query, price) {
     var context = this;
     var searchHistory = this.state.searchHistory;
@@ -278,8 +177,25 @@ class App extends React.Component {
     })
   }
 
+  showHomePageWines () {
+    if (!this.state.userClickedEntry) {
+      return <HomepageWines 
+              topReds={this.state.topReds} 
+              topWhites={this.state.topWhites} 
+              topRated={this.state.topRated}
+              handleClickedProductEntry={this.handleClickedProductEntry}
+              />;
+    } else {
+      return <ProductOverview 
+              reviews={this.state.reviews} 
+              currentWine={this.state.currentWine} 
+              getReviews={this.getReviews} 
+              submitReview={this.submitReview}/>;
+    }
+  }
+
   handleClickedProductEntry(wine) {
-    console.log('inside clicked product entry',wine);
+    console.log('inside clicked product entry', wine);
     if (wine) {
       this.setState({
         userClickedEntry: true,
@@ -291,70 +207,73 @@ class App extends React.Component {
     }
   }
 
-  render() {
 
-    var homepageWines = (
-      <div className='topItemsWrapper'>
-        <div className='trendingWineListWrapper'>
-          <TopRedsList handleClickedProductEntry={this.handleClickedProductEntry} topReds = {this.state.topReds}/>
-        </div>
-        <div className='bestValueWineListWrapper'>
-          <TopWhitesList handleClickedProductEntry={this.handleClickedProductEntry} topWhites={this.state.topWhites}/>
-        </div>
-        <div className='UvasChoiceWineListWrapper'>
-          <UvasChoiceWineList handleClickedProductEntry={this.handleClickedProductEntry} topRated={this.state.topRated}/>
-        </div>
-      </div>
-    );
-
-    var topbar = <TopBar username={this.state.username} userLoggedIn={this.state.userLoggedIn} handleUserWantsLogin={this.handleUserWantsLogin} userHasSearched={this.state.userHasSearched}/>;
+  // showProductsList() {
+    // if (this.state.userHasSearched) {
+      // return ProductList;
+    // }
     
-    var search = (
-      <div className = 'heroImageContainer'>
-        <div className = 'heroContentWrapper'>
-          <h2>Unbiased wine reviews</h2>
-          <Search className ='SearchBar' search = {this.search}/>
-        </div>
-      </div>
-    );
 
-    if (!this.state.userWantsLogin && !this.state.userHasSearched) {
-      return (
-        <div className = 'container'>
-          <div className = 'topBackgroundImageWrapper'>
-            {topbar}
-            <a href="/login/facebook">Sign Up or Login with Facebook</a>
-            {search}
-          </div>
+  // }
+
+  render () {
+      
+      const Products = () => (
+        <ProductList 
+          handleUserWantsProductList={this.handleUserWantsProductList} 
+          searchHistory={this.state.searchHistory} 
+          reviews={this.state.reviews} 
+          getReviews={this.getReviews} 
+          products={this.state.products} 
+          submitReview={this.submitReview} 
+          userHasSearched={this.state.userHasSearched} 
+          userWantsProductList={this.state.userWantsProductList}
+        />
+      )
+
+      const Homepage = () => (
+        <HomepageWines 
+          topReds={this.state.topReds} 
+          topWhites={this.state.topWhites} 
+          topRated={this.state.topRated}
+          handleClickedProductEntry={this.handleClickedProductEntry}
+        />
+      )
+
+      const Dummy = () => (
+        <div>
+          <h2>Hello World</h2>
+        </div>
+      )
+
+    return (
+      <div className = 'container'>
+        <div className = 'topBackgroundImageWrapper'>
+          <TopBar 
+            username={this.state.username} 
+            userLoggedIn={this.state.userLoggedIn} 
+            handleUserWantsLogin={this.handleUserWantsLogin} 
+            userHasSearched={this.state.userHasSearched}
+          />
+          <Search search={this.search} />
+        </div>
+        <Router>
           <div>
-            {!this.state.userClickedEntry ?
-              homepageWines : (<ProductOverview reviews={this.state.reviews} currentWine={this.state.currentWine} getReviews={this.getReviews} submitReview={this.submitReview}/>)
-            }
+            <ul>
+              <li><Link to='/'>Home</Link></li>
+              <li><Link to='/products'>Products</Link></li>
+              <li><Link to='/dummy'>Dummy</Link></li>
+            </ul>
+          
+            <hr/>
+
+              <Route exact path='/' component={Homepage}/>
+              <Route path='/products' component={Products}/>
+              <Route path='/dummy' component={Dummy} />
           </div>
-        </div>
-      )
-    } else if (this.state.userWantsLogin && !this.state.userHasSearched) {
-      return (
-        <div className = 'container'>
-          <div className='heroFullPage'>
-          {topbar}
-            <div className = 'loginWrapper'>
-              <Login checkUsername = {this.checkUsername} invalidUsername = {this.state.invalidUsername} newUser={this.newUser} invalidPasswordAttempt={this.state.invalidPasswordAttempt} validate={this.validateUser} handleUserWantsHome={this.handleUserWantsLogin} userWantsLogin={this.state.userWantsLogin} />
-            </div>
-          </div>
-        </div>
-      )
-    } else if (this.state.userHasSearched) {
-      return (
-        <div className="container login">
-          <div className = 'topBackgroundImageWrapper'>
-            {topbar}
-            {search}
-          </div>
-          <ProductList handleUserWantsProductList={this.handleUserWantsProductList} searchHistory={this.state.searchHistory} reviews={this.state.reviews} getReviews={this.getReviews} products={this.state.products} submitReview={this.submitReview} userHasSearched={this.state.userHasSearched} userWantsProductList={this.state.userWantsProductList}/>
-        </div>
-      )
-    }
+        </Router>
+      </div>
+    )
   }
 }
 
