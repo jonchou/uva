@@ -1,12 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var wineApiUtils = require('./utilities/wineApiUtils.js');
 var cors = require('cors');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var fb = require('./utilities/config.js');
 var ppUtils = require('./utilities/passportUtils.js');
-var User = require('../database-mongo/models/User.js');
 var path = require('path');
 var requesthandler = require('./requesthandler.js');
 var User = require('./models/user.js');
@@ -16,7 +14,7 @@ passport.use(new FacebookStrategy({
     clientID: fb.fbAppId,
     clientSecret: fb.secret,
     callbackURL: 'http://localhost:3000/login/facebook/callback',
-  }, User.passportAuth));
+  }, requesthandler.passportAuth));
 
 var app = express();
 
@@ -67,12 +65,8 @@ app.get('/login/facebook/callback',
 app.get('/init', requesthandler.init);
 
 app.options('*', cors());
-app.options('/users/username/');
 app.get('/getWines', requesthandler.getWines);
 app.post('/search', requesthandler.search);
-app.post('/signup', requesthandler.signup);
-app.post('/users/username/', requesthandler.usersUsername);
-app.post('/login', requesthandler.login);
 app.post('/review', requesthandler.review);
 app.post('/reviews', requesthandler.reviews);
 

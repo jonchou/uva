@@ -1,6 +1,7 @@
 var Product = require('./models/product.js');
 var User = require('./models/user.js');
 var Review = require('./models/review.js');
+var wineApiUtils = require('./utilities/wineApiUtils.js');
 
 module.exports.init = function(req, res) {
   var wines = {
@@ -24,6 +25,23 @@ module.exports.init = function(req, res) {
       });
     }
   });
+}
+
+module.exports.passportAuth = (accessToken, refreshToken, profile, done) => {
+  User.findUser(profile.displayName)
+    .then((user) => {
+      if (user.length === 0) {
+        User.createUser(profile.displayName, accessToken)
+          .then((user) => {
+            done(null, user);
+          })
+      } else {
+        done(null, user);
+      }
+    })
+    .catch((err) => {
+      done(err, null);
+    })
 }
 
 module.exports.getWines = function(req, res) {
@@ -55,27 +73,6 @@ module.exports.search = function(req, res) {
   })
 }
 
-module.exports.signup = function(req, res) {
-  var user = req.body.username;
-  var pass = req.body.password;
-
-  //check for valid username, i.e. currently not in use
-  User.checkuserName(user, function(error, valid, results){
-    if(error){
-      res.send('error inside checkuserName index');
-    } else if (!valid) {
-      res.send('duplicate username')
-    } else if (valid) {
-      User.addUser(user, pass, function(error, success, results){
-        if(error) {
-          res.send('error inside addUser index.js');
-        } else if (success) {
-          res.send(results);
-        }
-      })
-    }
-  })
-}
 
 module.exports.usersUsername = function(req, res) {
   var username = req.body.username;
@@ -124,19 +121,6 @@ module.exports.reviews = function(req, res) {
       res.send(error)
     } else {
       res.send(reviews)
-    }
-  })
-}
-
-module.exports.login = function(req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
-
-  User.validateUser(username, password, function(error, results) {
-    if(error){
-      console.log(error)
-    } else {
-      res.send(results);
     }
   })
 }
