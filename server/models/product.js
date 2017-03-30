@@ -1,8 +1,6 @@
 var mongoose = require('mongoose');
 var db = require('../../database-mongo/index.js');
 var Product = require('../../database-mongo/models/Product');
-var Review = require('../../database-mongo/models/Review');
-var User = require('../../database-mongo/models/User');
 
 module.exports = {
 
@@ -18,41 +16,7 @@ module.exports = {
       }
     })
   },
-
-  checkuserName: function(username, callback){
-    User.find({name: username}, function(err, results) {
-      if(err){
-        callback(error, false, null);
-      }
-      else if( results.length === 0 ) {
-        callback(null, true, results);
-
-      } else {
-        callback(null, false, results);
-      }
-    })
-  },
-
-  addUser: function(username, password, callback) {
-    User.create({name:username, password: password}, function(error, results) {
-      if(error){
-        callback(error, false, null)
-      } else {
-        callback(null, true, results);
-      }
-    })
-  },
-
-  validateUser: function(username, password, callback) {
-    User.find({name: username, password: password}, function(error, results) {
-      if(error){
-        callback(error, null);
-      } else {
-        callback(null, results);
-      }
-    })
-  },
-
+   
   addWine: function(wine, callback) {
     Product.create(wine, function(error, results){
       if(error){
@@ -62,28 +26,6 @@ module.exports = {
       }
     })
   },
-
-  addReview: function(review, callback){
-    Review.create({content: review.content, rating: review.rating, product: review.product, username: review.username, product_id: review.product_id}, function(error, results){
-      if(error){
-        callback(error, null)
-      } else {
-        callback(null, results)
-      }
-    })
-  },
-
-  getReviews: function(product_id, callback){
-    console.log('inside getReviews', product_id);
-    Review.find({product_id: product_id}, function(error, results){
-      if(error){
-        callback(error, null);
-      } else {
-        callback(null, results);
-      }
-    })
-  },
-
 
   top10Reds: function(callback) { //TODO: test against populated database once forcedRequest is up, or against dummy data
     // return db.Product.find({redORwhite:'Red Wines'}).sort({rating: -1}).limit(10)
@@ -123,10 +65,6 @@ module.exports = {
     })
   },
 
-  getUserReviews(username, callback) {
-
-  },
-
   storeWines(wines, callback) {
     let promises = wines.map(function(wine) {
       return new Promise(function(res, rej) {
@@ -150,4 +88,5 @@ module.exports = {
       callback();
     });
   }
+
 }
