@@ -14,7 +14,7 @@ passport.use(new FacebookStrategy({
     clientID: fb.fbAppId,
     clientSecret: fb.secret,
     callbackURL: 'http://localhost:3000/login/facebook/callback',
-  }, User.passportAuth));
+  }, requesthandler.passportAuth));
 
 var app = express();
 

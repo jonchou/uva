@@ -27,6 +27,23 @@ module.exports.init = function(req, res) {
   });
 }
 
+module.exports.passportAuth = (accessToken, refreshToken, profile, done) => {
+  User.findUser(profile.displayName)
+    .then((user) => {
+      if (user.length === 0) {
+        User.createUser(profile.displayName, accessToken)
+          .then((user) => {
+            done(null, user);
+          })
+      } else {
+        done(null, user);
+      }
+    })
+    .catch((err) => {
+      done(err, null);
+    })
+}
+
 module.exports.getWines = function(req, res) {
   // can be modified to take in a price from req/res later
   var price = 10;

@@ -2,36 +2,36 @@ var mongoose = require('mongoose');
 var db = require('../../database-mongo/index.js');
 var User = require('../../database-mongo/models/User');
 
-module.exports = {
-
-  passportAuth: function(accessToken, refreshToken, profile, done) {
-    User.find({name: profile.displayName}, function(err, user) {
+module.exports.findUser = (username) => {
+  return User.find({name: username}, (err, user) => {
+    return new Promise((resolve, reject) => {
       if (err) {
-        console.error(err);
-        return done(err);
-      } 
-      if (user.length < 1) {
-        User.create({
-          name: profile.displayName,
-          joined: new Date(),
-          accessToken: accessToken,
-          meta: {
-            reviews: 0,
-            friends: 0,
-          }, 
-        }, function(err, user) {
-          if (err) {
-            return done(err);
-          } else {
-            return done(null, user);
-          }
-        });
+        reject(err);
       } else {
-        done(null, user);
+        resolve(user);
       }
-    });
-  }
+    })
+  })
+}
 
+module.exports.createUser = (username, accessToken) => {
+  return User.create({
+    name: username,
+    joined: new Date(),
+    accessToken: accessToken,
+    meta: {
+      reviews: 0,
+      friends: 0
+    }
+  }, (err, user) => {
+    return new Promise((resolve, reject) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(user)
+      }
+    })
+  })
 }
 
   // checkuserName: function(username, callback){
