@@ -34,7 +34,6 @@ class App extends React.Component {
       userWantsProductList: false,
       userClickedEntry: false,
       currentWine: null,
-      questionnaire: false
     }
 
     this.search = this.search.bind(this);
@@ -296,9 +295,6 @@ class App extends React.Component {
 
     var homepageWines = (
       <div className='topItemsWrapper'>
-        <div>
-          <Questionnaire />
-        </div>
         <div className='trendingWineListWrapper'>
           <TopRedsList handleClickedProductEntry={this.handleClickedProductEntry} topReds = {this.state.topReds}/>
         </div>
