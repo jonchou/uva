@@ -1,31 +1,29 @@
 import React from 'react';
-import TopRedsList from './topRedsList.jsx';
-import TopWhitesList from './topWhitesList.jsx';
+import WineList from './WineList.jsx';
 import UvasChoiceWineList from './uvasChoiceWineList.jsx';
 
+var HomePageWines = ({topReds, topWhites, topRated, handleClickedProductEntry}) => (
+  <div className='topItemsWrapper'>
+    <div className='trendingWineListWrapper'>
+      <WineList
+        handleClickedProductEntry={handleClickedProductEntry}
+        wines={topReds}
+      />
+    </div>
+    <div className='bestValueWineListWrapper'>
+      <WineList
+        handleClickedProductEntry={handleClickedProductEntry}
+        wines={topWhites}
+      />
+    </div>
 
-class HomepageWines extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {};
-  }
+    <div className='UvasChoiceWineListWrapper'>
+      <UvasChoiceWineList
+        handleClickedProductEntry={handleClickedProductEntry}
+        topRated={topRated}
+      />
+    </div>
+  </div>
+);
 
-  render () {
-    return (
-      <div className='topItemsWrapper'>
-        <div className='trendingWineListWrapper'>
-          <TopRedsList handleClickedProductEntry={this.props.handleClickedProductEntry} topReds = {this.props.topReds}/>
-        </div>
-        <div className='bestValueWineListWrapper'>
-          <TopWhitesList handleClickedProductEntry={this.props.handleClickedProductEntry} topWhites={this.props.topWhites}/>
-        </div>
-
-        <div className='UvasChoiceWineListWrapper'>
-          <UvasChoiceWineList handleClickedProductEntry={this.props.handleClickedProductEntry} topRated={this.props.topRated}/>
-        </div>
-      </div>
-    )
-  }
-};
-
-export default HomepageWines;
+export default HomePageWines;
