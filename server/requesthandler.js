@@ -1,6 +1,7 @@
 var Product = require('./models/product.js');
 var User = require('./models/user.js');
 var Review = require('./models/review.js');
+var wineApiUtils = require('./utilities/wineApiUtils.js');
 
 module.exports.init = function(req, res) {
   var wines = {
