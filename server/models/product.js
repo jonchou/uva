@@ -11,7 +11,7 @@ module.exports = {
       if(error){
         callback(error, null)
         } else {
-          console.log('resultss earching', results)
+          console.log('results searching', results)
         callback(null, results);
       }
     })

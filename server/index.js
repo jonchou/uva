@@ -65,6 +65,7 @@ app.get('/login/facebook/callback',
 app.get('/init', requesthandler.init);
 
 app.options('*', cors());
+
 app.get('/getWines', requesthandler.getWines);
 app.post('/search', requesthandler.search);
 app.post('/review', requesthandler.review);
