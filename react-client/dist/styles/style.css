@@ -104,18 +104,6 @@ input:hover::-webkit-input-placeholder {
   color: white;
 }
 
-/*.reviewForm input::-webkit-input-placeholder {
-  text-align: center;
-  font-family: 'Josefin Sans', sans-serif;
-  color: ;
-}
-
-.reviewForm input:hover::-webkit-input-placeholder {
-  text-align: center;
-  font-family: 'Josefin Sans', sans-serif;
-  color: white;
-}*/
-
 .bestCategory {
   width: 33%;
   postion: relative;
@@ -152,7 +140,7 @@ ul li{
   text-align: center;
 }
 
-form input {
+div input {
   color: rgba(157, 82, 193, 0.88);
   font-family: 'Josefin Sans', sans-serif;
   padding: 0.2em 1em;
@@ -164,7 +152,7 @@ form input {
   margin: .1em 0.3em;
 }
 
-form input:hover {
+div input:hover {
   color:  rgb(255, 255, 255);
   background-color: rgba(157, 82, 193, 0.38);
 }

@@ -93,10 +93,7 @@ class App extends React.Component {
   getReviews(product_id){
     var context = this;
     console.log('this is the key', product_id);
-    // temporary fix to not infinitely loop through ajax calls
-    if (this.state.reviews) {
-      return;
-    }
+
     $.ajax({
       url: '/reviews',
       type: 'POST',
@@ -105,21 +102,22 @@ class App extends React.Component {
         product_id: product_id
       }),
       success: function(reviews){
+        if (context.state.reviews && reviews.length === context.state.reviews.length) {
+          return;
+        }
         context.setState({
           reviews: reviews
-        })
+        });
       },
       error: function(error){
         console.log('error after getting reviews AJAX', error)
       }
-    })
+    });
   }
 
   submitReview (review, rating, wine) {
     var context = this;
     console.log('wine', wine);
-    var product_id = wine._id;
-    var product = wine.name;
 
     $.ajax({
       url: '/review',
@@ -128,9 +126,9 @@ class App extends React.Component {
       data: JSON.stringify({
         review: review,
         rating: rating,
-        name: name,
-        username: this.state.username,
-        product_id: product_id,
+        product: wine.name,
+        username: context.state.username,
+        product_id: wine._id,
         time: Date
       }),
       success: function(data) {
