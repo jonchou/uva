@@ -40,11 +40,3 @@ module.exports.recommendations = (username) => {
         })
     })
 }
-
-// module.exports.recommendations('Tyler Arbus')
-//   .then((queries) => {
-//     console.log(queries);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   })

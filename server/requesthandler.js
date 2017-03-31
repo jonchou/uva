@@ -10,7 +10,6 @@ module.exports.init = function(req, res) {
     top10Wines: [],
     topRated: [],
   };
-
   Product.top10Reds(function(error, topReds) {
     if (error) {
       res.send(error);
@@ -21,7 +20,7 @@ module.exports.init = function(req, res) {
           res.send(error)
         } else {
           wines.top10Whites = topWhites;
-          NNUtils.recommendations('Tyler Arbus')
+          NNUtils.recommendations(req.user)
             .then((recommendations) => {
               wines.topRated = recommendations.map((wine) => {
                 return wine.details;
