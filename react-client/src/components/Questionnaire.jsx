@@ -33,7 +33,7 @@ class Questionnaire extends React.Component {
             <input type="checkbox" name="varietal" value="sauvignonBlanc"/>
             <label>Sauvignon Blanc</label><br/>
             <input type="checkbox" name="varietal" value="unsure"/>
-            <label>If you're not sure/don't know check here!</label>            
+            <label>If you're not sure/don't know check here (only check this box if none of the above are checked)!</label>            
           </div>
           <div>
             Please check each price you would be comfortable paying for one bottle of wine. <br/> (Must select at least one)

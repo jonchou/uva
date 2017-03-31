@@ -38,33 +38,62 @@ module.exports.recommendations = (username) => {
 
 const transformQuestToTrainingData = (questResults) => {
   const trainingSet = [];
-
   if (questResults.varietal === 'unsure') {
     if (typeof questResults.wineType === 'object') {
       for (var i = 0; i < questResults.wineType.length; i++) {
-        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType[i], questResults.price);
+        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType[i]);
       }   
     } else {
       if (questResults.wineType === 'white') {
-        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType, questResults.price);
+        generatePreferenceForEachPrice(trainingSet, questResults, 'white');
       } else if (questResults.wineType === 'red') {
-        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType, questResults.price);
+        generatePreferenceForEachPrice(trainingSet, questResults, 'red');
       }
     }
   } else {
-
+    if (typeof questResults.varietal === 'object') {
+      for (var i = 0; i < questResults.varietal.length; i++) {
+        if (questResults.varietal[i] === 'cabernet' || questResults.varietal[i] === 'merlot') {
+          generatePreferenceForEachPrice(trainingSet, questResults, 'red', questResults.varietal[i]);
+        } else if (questResults.varietal[i] === 'chardonnay' || questResults.varietal[i] === 'sauvignonBlanc') {
+          generatePreferenceForEachPrice(trainingSet, questResults, 'white', questResults.varietal[i]);
+        }
+      }
+    } else {
+      if (questResults.varietal === 'cabernet') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'red', 'cabernet');
+      } else if (questResults.varietal === 'merlot') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'red', 'merlot');        
+      } else if (questResults.varietal === 'chardonnay') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'white', 'chardonnay');        
+      } else if (questResults.varietal === 'sauvignonBlanc') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'white', 'sauvignonBlanc');        
+      }
+    }
   }
-
   return trainingSet;
 }
 
-const generateOnePreference = (trainingSet, questResults, wineType, price) => {
+const assignVarietal = (preference, varietal) => {
+  if (varietal === 'cabernet') {
+    preference.input[1] = 1;
+  } else if (varietal === 'merlot') {
+    preference.input[2] = 1;      
+  } else if (varietal === 'chardonnay') {
+    preference.input[3] = 1;      
+  } else if (varietal === 'sauvignonBlanc') {
+    preference.input[4] = 1;      
+  }
+}
+
+const generateOnePreference = (trainingSet, wineType, price, varietal) => {
   if (wineType === 'red') {
    let preference = {
       input: [0, 0, 0, 0, 0, 0],
       output: [1]
     }
     preference.input[0] = 1;
+    assignVarietal(preference, varietal);
     preference.input[5] = (price / 100); 
     trainingSet.push(preference);    
   } else {
@@ -72,43 +101,32 @@ const generateOnePreference = (trainingSet, questResults, wineType, price) => {
       input: [0, 0, 0, 0, 0, 0],
       output: [1]
     }
+    assignVarietal(preference, varietal);
     preference.input[5] = (price / 100); 
     trainingSet.push(preference);
   }  
 }
 
-const generatePreferenceForEachPrice = (trainingSet, questResults, wineType, price) => {
+const generatePreferenceForEachPrice = (trainingSet, questResults, wineType, varietal) => {
   if (typeof questResults.price === 'object') {
-    for (var j = 0; j < questResults.price.length; j++) {
-      generateOnePreference(trainingSet, questResults, wineType, questResults.price[j]);
+    for (var i = 0; i < questResults.price.length; i++) {
+      generateOnePreference(trainingSet, wineType, questResults.price[i], varietal);
     }
   } else {
-    generateOnePreference(trainingSet, questResults, wineType, questResults.price);
+    generateOnePreference(trainingSet, wineType, questResults.price, varietal);
   }  
 }
 
-const quest4 = { 
+const quest1 = { 
   wineType: 'red', 
   varietal: 'unsure', 
   price: '10' 
-}
-
-const quest1 = { 
-  wineType: 'white',
-  varietal: [ 'merlot', 'chardonnay' ],
-  price: [ '10', '20', '30', '40' ] 
 }
 
 const quest2 = { 
   wineType: [ 'red', 'white' ],
   varietal: [ 'cabernet', 'sauvignonBlanc' ],
   price: [ '10', '20', '70' ] 
-}
-
-const quest3 = { 
-  wineType: 'white', 
-  varietal: 'merlot', 
-  price: '10' 
 }
 
 // what to do if leave varietal blank
