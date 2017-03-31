@@ -3,8 +3,8 @@ const db = require('../../database-mongo/index.js');
 const Like = require('../../database-mongo/models/Likes');
 
 module.exports.addLike = (username, productId, like) => {
-  return Like.create({ username: username, product_id: productId, like: like }, (err, result) => {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    Like.create({ username: username, product_id: productId, like: like }, (err, result) => {
       if (err) { reject(err); }
       else { resolve(result); }
     })
@@ -12,8 +12,8 @@ module.exports.addLike = (username, productId, like) => {
 }
 
 module.exports.getLikes = (username) => {
-  return Like.find({ username: username }, (err, result) => {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    Like.find({ username: username }, (err, result) => {
       if (err) { reject(err); }
       else { resolve(result); }
     })
