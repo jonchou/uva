@@ -133,3 +133,27 @@ module.exports.reviews = function(req, res) {
     }
   })
 }
+
+module.exports.likes = (req, res) => {
+  NNUtils.retrain(req.user, req.body.wine, req.body.like)
+    .then((response) => {
+      if (response === 'success') {
+        res.end();
+      } else {
+        res.statusCode(500);
+        res.end();
+      }
+    })
+    .catch((error) => {
+      res.statusCode(500);
+      res.send(error);
+    })
+}
+
+
+
+
+
+
+
+
