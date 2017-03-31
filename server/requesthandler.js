@@ -1,6 +1,7 @@
 var Product = require('./models/product.js');
 var User = require('./models/user.js');
 var Review = require('./models/review.js');
+const Like = require('./models/likes.js');
 var wineApiUtils = require('./utilities/wineApiUtils.js');
 var NNUtils = require('./utilities/neuralNetworkUtils.js');
 
@@ -135,25 +136,25 @@ module.exports.reviews = function(req, res) {
 }
 
 module.exports.likes = (req, res) => {
-  NNUtils.retrain(req.user, req.body.wine, req.body.like)
-    .then((response) => {
-      if (response === 'success') {
+  if (!req.body.wine || !req.body.wine || !req.body.wine.like || !req.user) {
+    res.status(400);
+    res.end();
+  } else {
+    Like.addLike(req.user, req.body.wine._id, req.body.wine.like)
+      .then((response) => {
+        NNUtils.retrain(req.user, req.body.wine, req.body.wine.like)
+          .then((response) => {
+            if (response === 'success') {
+              res.end();
+            } else {
+              res.status(500);
+              res.end();
+            }
+          })
+      })
+      .catch((error) => {
+        res.status(500);
         res.end();
-      } else {
-        res.statusCode(500);
-        res.end();
-      }
-    })
-    .catch((error) => {
-      res.statusCode(500);
-      res.send(error);
-    })
+      })
+    }
 }
-
-
-
-
-
-
-
-
