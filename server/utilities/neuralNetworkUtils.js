@@ -36,7 +36,7 @@ module.exports.recommendations = (username) => {
     })
 }
 
-const transformQuestToTrainingData = (questResults) => {
+module.exports.transformQuestResultsToTrainingData = (questResults) => {
   const trainingSet = [];
   if (questResults.varietal === 'unsure') {
     if (typeof questResults.wineType === 'object') {
@@ -116,5 +116,3 @@ const generatePreferenceForEachPrice = (trainingSet, questResults, wineType, var
     generateOnePreference(trainingSet, wineType, questResults.price, varietal);
   }  
 }
-
-module.exports.transformQuestToTrainingData = transformQuestToTrainingData;
