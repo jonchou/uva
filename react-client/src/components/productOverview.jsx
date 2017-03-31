@@ -27,6 +27,7 @@ class ProductOverview extends React.Component{
   }
 
   handleReviewChange(event){
+    console.log('handle change value: ', event.target.value)
     this.setState({
       userReview: event.target.value
     })

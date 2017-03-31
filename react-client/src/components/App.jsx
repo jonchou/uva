@@ -7,6 +7,8 @@ import TopBar from './TopBar.jsx';
 import ProductOverview from './productOverview.jsx';
 import Questionnaire from './Questionnaire.jsx';
 import HomePageWines from './HomePageWines.jsx';
+import Nav from './Nav.jsx'
+import WineList from './WineList.jsx'
 
 import {
   BrowserRouter as Router,
@@ -18,6 +20,20 @@ class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
+      wineRoutes: [
+        { path: '/reds',
+          title: 'Top Reds',
+          wines: () => { this.state.topReds ? this.state.topReds: null },
+        },
+        { path: '/whites',
+          title: 'Top Whites',
+          wines: () => { this.state.topWhites ? this.state.topWhites: null },
+        },
+        { path: '/uvaschoices',
+          title: 'Uva\'s Choices',
+          wines: () => { this.state.topRated ? this.state.topRated: null },
+        },
+      ], 
       products: [],
       // reviews: [],
       topReds: [],
@@ -247,32 +263,42 @@ class App extends React.Component {
 
     return (
       <div className = 'container'>
-        <div className = 'topBackgroundImageWrapper'>
-          <TopBar 
-            username={this.state.username} 
-            userLoggedIn={this.state.userLoggedIn} 
-            handleUserWantsLogin={this.handleUserWantsLogin} 
-            userHasSearched={this.state.userHasSearched}
-          />
-          <div className = 'heroImageContainer'>
-            <div className = 'heroContentWrapper'>
-              <Search className ='SearchBar' search={this.search} />
-            </div>
-          </div>
-        </div>
         <Router>
-          <div>        
-            <ul>
-              <li><Link to='/'>Home</Link></li>
-              <li><Link to='/products'>Products</Link></li>
-              <li><Link to='/dummy'>Dummy</Link></li>
-            </ul>
-            <hr/>
-            
-            <Route exact path='/' component={Homepage}/>
-            <Route path='/products' component={Products}/>
-            <Route path='/product/overview' component={ProductOverviewComp}/>
-            <Route path='/dummy' component={Dummy} />
+          <div>
+            <div className = 'topBackgroundImageWrapper'>
+              <Link to='/'>
+                <TopBar 
+                  username={this.state.username} 
+                  userLoggedIn={this.state.userLoggedIn} 
+                  handleUserWantsLogin={this.handleUserWantsLogin} 
+                  userHasSearched={this.state.userHasSearched}
+                />
+              </Link>
+              <div className = 'heroImageContainer'>
+                <div className = 'heroContentWrapper'>
+                  <Search className ='SearchBar' search={this.search} />
+                </div>
+              </div>    
+            </div>
+            <div>
+              <Nav wineRoutes={this.state.wineRoutes} />
+                  <hr/>
+                  <Route exact path='/' component={Homepage}/>
+                  <Route path='/products' component={Products}/>
+                  <Route path='/product/overview' component={ProductOverviewComp}/>
+                  {this.state.wineRoutes.map((route, index) => {
+                    <Route
+                      key={index}
+                      path={route.path}
+                      component={() => {
+                        <WineList
+                        handleClickedProductEntry={this.handleClickedProductEntry}
+                        wines={route.wines}
+                      />
+                      }}
+                    />
+                  })}
+            </div>
           </div>
         </Router>
       </div>
