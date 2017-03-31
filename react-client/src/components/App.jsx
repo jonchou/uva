@@ -57,7 +57,6 @@ class App extends React.Component {
     }
 
     this.search = this.search.bind(this);
-    this.showHomePageWines = this.showHomePageWines.bind(this);
     this.handleUserWantsHome = this.handleUserWantsHome.bind(this);
     this.submitReview = this.submitReview.bind(this);
     this.getReviews = this.getReviews.bind(this);
@@ -70,10 +69,6 @@ class App extends React.Component {
 
   componentDidMount(){
     this.init();
-  }
-
-  componentDidUpdate() {
-    ;
   }
 
   handleUserWantsHome(event) {
@@ -197,24 +192,6 @@ class App extends React.Component {
     })
   }
 
-  showHomePageWines () {
-    if (!this.state.userClickedEntry) {
-      return <HomePageWines
-              topReds={this.state.allWines.reds.wines} 
-              topWhites={this.state.allWines.whites.wines} 
-              topRated={this.state.allWines.uvas.wines}
-              handleClickedProductEntry={this.handleClickedProductEntry}
-            />;
-    } else {
-      return <ProductOverview
-              reviews={this.state.reviews}
-              currentWine={this.state.currentWine}
-              getReviews={this.getReviews}
-              submitReview={this.submitReview}
-            />;
-    }
-  }
-
   handleClickedProductEntry(wine) {
     console.log('inside clicked product entry', wine);
     if (wine) {
@@ -238,44 +215,40 @@ class App extends React.Component {
 
   render () {
 
-      const wineRoutes = Object.values(this.state.allWines);
+    const wineRoutes = Object.values(this.state.allWines);
 
-      console.log('wineRoutes', wineRoutes)
-      
-      const Products = () => (
-        <ProductList 
-          handleUserWantsProductList={this.handleUserWantsProductList} 
-          searchHistory={this.state.searchHistory} 
-          reviews={this.state.reviews} 
-          getReviews={this.getReviews} 
-          products={this.state.products} 
-          submitReview={this.submitReview} 
-          userHasSearched={this.state.userHasSearched} 
-          userWantsProductList={this.state.userWantsProductList}
-        />
-      )
+    console.log('wineRoutes', wineRoutes)
+    
+    const Products = () => (
+      <ProductList 
+        handleUserWantsProductList={this.handleUserWantsProductList} 
+        searchHistory={this.state.searchHistory} 
+        reviews={this.state.reviews} 
+        getReviews={this.getReviews} 
+        products={this.state.products} 
+        submitReview={this.submitReview} 
+        userHasSearched={this.state.userHasSearched} 
+        userWantsProductList={this.state.userWantsProductList}
+      />
+    )
 
-      const Homepage = () => (
-        <HomePageWines
-          topReds={this.state.allWines.reds.wines} 
-          topWhites={this.state.allWines.whites.wines} 
-          topRated={this.state.allWines.uvas.wines}
-          handleClickedProductEntry={this.handleClickedProductEntry}
-        />
-      )
+    const Homepage = () => (
+      <HomePageWines
+        topReds={this.state.allWines.reds.wines} 
+        topWhites={this.state.allWines.whites.wines} 
+        topRated={this.state.allWines.uvas.wines}
+        handleClickedProductEntry={this.handleClickedProductEntry}
+      />
+    )
 
-      const ProductOverviewComp = () => (
-        <ProductOverview
-          reviews={this.state.reviews}
-          currentWine={this.state.currentWine}
-          getReviews={this.getReviews}
-          submitReview={this.submitReview}
-        />
-      )
-
-      
-
-        
+    const ProductOverviewComp = () => (
+      <ProductOverview
+        reviews={this.state.reviews}
+        currentWine={this.state.currentWine}
+        getReviews={this.getReviews}
+        submitReview={this.submitReview}
+      />
+    )
 
     return (
       <div className = 'container'>
@@ -292,33 +265,31 @@ class App extends React.Component {
               </Link>
               <div className = 'heroImageContainer'>
                 <div className = 'heroContentWrapper'>
-                Uva 2.Grape
+                  Uva 2.Grape
                   <Search className ='SearchBar' search={this.search} />
                 </div>
               </div>    
             </div>
             <div>
-              <div className='trendingWineListWrapper'>
-                  <Nav wineRoutes={wineRoutes} />
-              </div>
-              <div>
-                <hr/>
-              </div>
-                  <Route exact path='/' component={Homepage}/>
-                  <Route path='/products' component={Products}/>
-                  <Route path='/product/overview' component={ProductOverviewComp}/>
-                  {wineRoutes.map((route, index) => (
-                    <Route
-                      key={index}
-                      exact path={route.path}
-                      component={() => (
-                        <WineList
-                        handleClickedProductEntry={this.handleClickedProductEntry}
-                        wines={route.wines}
-                        />
-                      )}
+              <Nav wineRoutes={wineRoutes} />
+              <hr/>
+            </div>
+            <div>
+              <Route exact path='/' component={Homepage}/>
+              <Route path='/products' component={Products}/>
+              <Route path='/product/overview' component={ProductOverviewComp}/>
+              {wineRoutes.map((route, index) => (
+                <Route
+                  key={index}
+                  exact path={route.path}
+                  component={() => (
+                    <WineList
+                      handleClickedProductEntry={this.handleClickedProductEntry}
+                      wines={route.wines}
                     />
-                  ))}
+                  )}
+                />
+              ))}
             </div>
           </div>
         </Router>
