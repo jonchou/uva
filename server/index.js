@@ -72,7 +72,7 @@ app.post('/train', function(req, res) {
   console.log('body: ', req.body);
   res.send('received form data');
 });
-app.post('likes', requesthandler.likes);
+app.post('/likes', requesthandler.likes);
 
 var port = process.env.PORT || 3000;
 
