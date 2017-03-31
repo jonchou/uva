@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchBar from 'react';
+import SearchBar from './SearchBar';
 
 const Search = (props) => {
   <div className = 'heroImageContainer'>
