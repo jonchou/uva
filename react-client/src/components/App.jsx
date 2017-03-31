@@ -268,6 +268,7 @@ class App extends React.Component {
               <li><Link to='/dummy'>Dummy</Link></li>
             </ul>
             <hr/>
+            
             <Route exact path='/' component={Homepage}/>
             <Route path='/products' component={Products}/>
             <Route path='/product/overview' component={ProductOverviewComp}/>
