@@ -12,7 +12,7 @@ class Questionnaire extends React.Component {
         <h2>Help Us Give You Great Recommendations</h2>
         <form action="http://localhost:3000/train" method='POST'>
           <div>
-            Please check each wine type that you enjoy drinking (if you don't know leave it blank)
+            Please check each wine type that you enjoy drinking. <br/> (Must select at least one)
           </div>
           <div>
             <input type="checkbox" name="wineType" value="red"/>
@@ -21,9 +21,9 @@ class Questionnaire extends React.Component {
             <label>White</label>
           </div>
           <div>
-            Please check each varietal that you enjoy drinking (if you don't know leave it blank)
+            Please check each common varietal that you enjoy drinking. <br/> (Must select at least one)
           </div>
-          <div>
+          <div>            
             <input type="checkbox" name="varietal" value="cabernet"/>
             <label>Cabernet</label><br/>
             <input type="checkbox" name="varietal" value="merlot"/>
@@ -31,31 +31,33 @@ class Questionnaire extends React.Component {
             <input type="checkbox" name="varietal" value="chardonnay"/>
             <label>Chardonnay</label><br/>
             <input type="checkbox" name="varietal" value="sauvignonBlanc"/>
-            <label>Sauvignon Blanc</label>
+            <label>Sauvignon Blanc</label><br/>
+            <input type="checkbox" name="varietal" value="unsure"/>
+            <label>If you're not sure/don't know check here!</label>            
           </div>
           <div>
-            Please check each price you are comfortable paying per bottle of wine
+            Please check each price you would be comfortable paying for one bottle of wine. <br/> (Must select at least one)
           </div>
           <div>            
-            <input type="checkbox" name="price" value="$10"/>
+            <input type="checkbox" name="price" value="10"/>
             <label>$10</label><br/>
-            <input type="checkbox" name="price" value="$20"/>
+            <input type="checkbox" name="price" value="20"/>
             <label>$20</label><br/>
-            <input type="checkbox" name="price" value="$30"/>
+            <input type="checkbox" name="price" value="30"/>
             <label>$30</label><br/>
-            <input type="checkbox" name="price" value="$40"/>
+            <input type="checkbox" name="price" value="40"/>
             <label>$40</label><br/>
-            <input type="checkbox" name="price" value="$50"/>
+            <input type="checkbox" name="price" value="50"/>
             <label>$50</label><br/>
-            <input type="checkbox" name="price" value="$60"/>
+            <input type="checkbox" name="price" value="60"/>
             <label>$60</label><br/>
-            <input type="checkbox" name="price" value="$70"/>
+            <input type="checkbox" name="price" value="70"/>
             <label>$70</label><br/>
-            <input type="checkbox" name="price" value="$80"/>
+            <input type="checkbox" name="price" value="80"/>
             <label>$80</label><br/>
-            <input type="checkbox" name="price" value="$80"/>
+            <input type="checkbox" name="price" value="90"/>
             <label>$90</label><br/>
-            <input type="checkbox" name="price" value="$100"/>
+            <input type="checkbox" name="price" value="100"/>
             <label>$100</label><br/>                                                                                                            
           </div>
           <div>

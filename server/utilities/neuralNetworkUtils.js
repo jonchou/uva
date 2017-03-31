@@ -35,3 +35,110 @@ module.exports.recommendations = (username) => {
         })
     })
 }
+
+const transformQuestToTrainingData = (questResults) => {
+  const trainingSet = [];
+
+  if (questResults.varietal === 'unsure') {
+    if (typeof questResults.wineType === 'object') {
+      for (var i = 0; i < questResults.wineType.length; i++) {
+        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType[i], questResults.price);
+      }   
+    } else {
+      if (questResults.wineType === 'white') {
+        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType, questResults.price);
+      } else if (questResults.wineType === 'red') {
+        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType, questResults.price);
+      }
+    }
+  } else {
+
+  }
+
+  return trainingSet;
+}
+
+const generateOnePreference = (trainingSet, questResults, wineType, price) => {
+  if (wineType === 'red') {
+   let preference = {
+      input: [0, 0, 0, 0, 0, 0],
+      output: [1]
+    }
+    preference.input[0] = 1;
+    preference.input[5] = (price / 100); 
+    trainingSet.push(preference);    
+  } else {
+    let preference = {
+      input: [0, 0, 0, 0, 0, 0],
+      output: [1]
+    }
+    preference.input[5] = (price / 100); 
+    trainingSet.push(preference);
+  }  
+}
+
+const generatePreferenceForEachPrice = (trainingSet, questResults, wineType, price) => {
+  if (typeof questResults.price === 'object') {
+    for (var j = 0; j < questResults.price.length; j++) {
+      generateOnePreference(trainingSet, questResults, wineType, questResults.price[j]);
+    }
+  } else {
+    generateOnePreference(trainingSet, questResults, wineType, questResults.price);
+  }  
+}
+
+const quest4 = { 
+  wineType: 'red', 
+  varietal: 'unsure', 
+  price: '10' 
+}
+
+const quest1 = { 
+  wineType: 'white',
+  varietal: [ 'merlot', 'chardonnay' ],
+  price: [ '10', '20', '30', '40' ] 
+}
+
+const quest2 = { 
+  wineType: [ 'red', 'white' ],
+  varietal: [ 'cabernet', 'sauvignonBlanc' ],
+  price: [ '10', '20', '70' ] 
+}
+
+const quest3 = { 
+  wineType: 'white', 
+  varietal: 'merlot', 
+  price: '10' 
+}
+
+// what to do if leave varietal blank
+// if the person says they like red but dont indicate a varietal what do i do
+
+const trainingSet = [
+  {
+    input: [0, 0, 0, 0, 0, .2],
+    output: [1]
+  },
+  {
+    input: [0, 0, 0, 0, 0, .9],
+    output: [0]
+  },
+  {
+    input: [0, 0, 0, 0, 0, .4],
+    output: [1]
+  },
+  {
+    input: [0, 0, 0, 0, 0, .1],
+    output: [1]
+  },
+  {
+    input: [0, 0, 0, 0, 0, .8],
+    output: [0]
+  },
+  {
+    input: [0, 0, 0, 0, 0, .6],
+    output: [0]
+  },
+]
+
+module.exports.transformQuestToTrainingData = transformQuestToTrainingData;
