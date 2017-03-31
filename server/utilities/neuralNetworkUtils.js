@@ -35,3 +35,84 @@ module.exports.recommendations = (username) => {
         })
     })
 }
+
+module.exports.transformQuestResultsToTrainingData = (questResults) => {
+  const trainingSet = [];
+  if (questResults.varietal === 'unsure') {
+    if (typeof questResults.wineType === 'object') {
+      for (var i = 0; i < questResults.wineType.length; i++) {
+        generatePreferenceForEachPrice(trainingSet, questResults, questResults.wineType[i]);
+      }   
+    } else {
+      if (questResults.wineType === 'white') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'white');
+      } else if (questResults.wineType === 'red') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'red');
+      }
+    }
+  } else {
+    if (typeof questResults.varietal === 'object') {
+      for (var i = 0; i < questResults.varietal.length; i++) {
+        if (questResults.varietal[i] === 'cabernet' || questResults.varietal[i] === 'merlot') {
+          generatePreferenceForEachPrice(trainingSet, questResults, 'red', questResults.varietal[i]);
+        } else if (questResults.varietal[i] === 'chardonnay' || questResults.varietal[i] === 'sauvignonBlanc') {
+          generatePreferenceForEachPrice(trainingSet, questResults, 'white', questResults.varietal[i]);
+        }
+      }
+    } else {
+      if (questResults.varietal === 'cabernet') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'red', 'cabernet');
+      } else if (questResults.varietal === 'merlot') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'red', 'merlot');        
+      } else if (questResults.varietal === 'chardonnay') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'white', 'chardonnay');        
+      } else if (questResults.varietal === 'sauvignonBlanc') {
+        generatePreferenceForEachPrice(trainingSet, questResults, 'white', 'sauvignonBlanc');        
+      }
+    }
+  }
+  return trainingSet;
+}
+
+const assignVarietal = (preference, varietal) => {
+  if (varietal === 'cabernet') {
+    preference.input[1] = 1;
+  } else if (varietal === 'merlot') {
+    preference.input[2] = 1;      
+  } else if (varietal === 'chardonnay') {
+    preference.input[3] = 1;      
+  } else if (varietal === 'sauvignonBlanc') {
+    preference.input[4] = 1;      
+  }
+}
+
+const generateOnePreference = (trainingSet, wineType, price, varietal) => {
+  if (wineType === 'red') {
+   let preference = {
+      input: [0, 0, 0, 0, 0, 0],
+      output: [1]
+    }
+    preference.input[0] = 1;
+    assignVarietal(preference, varietal);
+    preference.input[5] = (price / 100); 
+    trainingSet.push(preference);    
+  } else {
+    let preference = {
+      input: [0, 0, 0, 0, 0, 0],
+      output: [1]
+    }
+    assignVarietal(preference, varietal);
+    preference.input[5] = (price / 100); 
+    trainingSet.push(preference);
+  }  
+}
+
+const generatePreferenceForEachPrice = (trainingSet, questResults, wineType, varietal) => {
+  if (typeof questResults.price === 'object') {
+    for (var i = 0; i < questResults.price.length; i++) {
+      generateOnePreference(trainingSet, wineType, questResults.price[i], varietal);
+    }
+  } else {
+    generateOnePreference(trainingSet, wineType, questResults.price, varietal);
+  }  
+}

@@ -6,6 +6,3 @@ module.exports.isLoggedIn = (req, res, next) => {
     res.redirect('/login/facebook/callback');
   }
 };
-
-
-
