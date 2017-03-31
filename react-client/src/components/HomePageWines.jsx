@@ -19,7 +19,7 @@ var HomePageWines = ({topReds, topWhites, topRated, handleClickedProductEntry}) 
     <div className='UvasChoiceWineListWrapper'>
       <WineList
         handleClickedProductEntry={handleClickedProductEntry}
-        topRated={topRated}
+        wines={topRated}
       />
     </div>
   </div>

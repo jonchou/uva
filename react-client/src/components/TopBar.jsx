@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+
 
 class TopBar extends React.Component {
   constructor(props){
@@ -12,10 +18,11 @@ class TopBar extends React.Component {
     var home = (<button onClick={this.props.handleUserWantsHome} className='flexItem flexEdge' value='login'>Home</button>);
 
     return(
-      <div className='flexContainer'>
-        { this.props.userWantsHomePage && !this.props.userLoggedIn ? signup : this.props.userWantsHomePage && this.props.userLoggedIn || this.props.userWantsLogin ? home : home}
-     </div>  
-
+      <Link to='/'>
+        <div className='flexContainer'>
+          { this.props.userWantsHomePage && !this.props.userLoggedIn ? signup : this.props.userWantsHomePage && this.props.userLoggedIn || this.props.userWantsLogin ? home : home}
+       </div>  
+      </Link>
     )
   }
 }

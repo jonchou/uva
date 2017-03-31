@@ -1,10 +1,11 @@
 import React from 'react';
+import SearchBar from 'react';
 
 const Search = (props) => {
   <div className = 'heroImageContainer'>
     <div className = 'heroContentWrapper'>
       <h2>Unbiased wine reviews</h2>
-      <Search className ='SearchBar' search = {props.search}/>
+      <SearchBar className ='SearchBar' search = {props.search}/>
     </div>
   </div>
 }

@@ -37,7 +37,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 passport.serializeUser((user, done) => {
   // user is returned as an object within an array
-  if (user) {
+  if (user[0]) {
     done(null, user[0].name);
   } else {
     done(null, 'first time user');
