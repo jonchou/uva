@@ -259,10 +259,7 @@ class App extends React.Component {
           <Search search={this.search} />
         </div>
         <Router>
-          <div>
-            <div>
-              <Questionnaire />
-            </div>          
+          <div>        
             <ul>
               <li><Link to='/'>Home</Link></li>
               <li><Link to='/products'>Products</Link></li>
