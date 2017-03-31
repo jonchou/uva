@@ -42,12 +42,15 @@ module.exports.retrain = (username, wine, like) => {
     .then((user) => {
       if (user[0]) {
         let profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
-        let trainingSet = [{
+        const trainingSet = [{
           input: neurons,
           output: like
         }];
-        NN.train(profile, trainingSet);
-        return 'success';
+        profile = NN.train(profile, trainingSet);
+        User.updateUserNN(username, profile)
+          .then((response) => {
+            return 'success training NN';
+          })
       } else {
         return 'user not found';
       }
