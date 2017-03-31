@@ -65,7 +65,6 @@ app.get('/getWines', requesthandler.getWines);
 app.post('/search', requesthandler.search);
 app.post('/review', requesthandler.review);
 app.post('/reviews', requesthandler.reviews);
-
 app.post('/train', function(req, res) {
 
   // nnUtils.transformQuestToTrainingData(req.body);
@@ -73,6 +72,7 @@ app.post('/train', function(req, res) {
   console.log('body: ', req.body);
   res.send('received form data');
 });
+app.post('likes', requesthandler.likes);
 
 var port = process.env.PORT || 3000;
 

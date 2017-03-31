@@ -36,6 +36,24 @@ module.exports.recommendations = (username) => {
     })
 }
 
+module.exports.retrain = (username, wine, like) => {
+  const neurons = convertWinetoNeuron(wine);
+  return User.findUser(username)
+    .then((user) => {
+      if (user[0]) {
+        let profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
+        let trainingSet = [{
+          input: neurons,
+          output: like
+        }];
+        NN.train(profile, trainingSet);
+        return 'success';
+      } else {
+        return 'user not found';
+      }
+    })
+}
+
 module.exports.transformQuestResultsToTrainingData = (questResults) => {
   const trainingSet = [];
   if (questResults.varietal === 'unsure') {
