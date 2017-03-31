@@ -117,46 +117,4 @@ const generatePreferenceForEachPrice = (trainingSet, questResults, wineType, var
   }  
 }
 
-const quest1 = { 
-  wineType: 'red', 
-  varietal: 'unsure', 
-  price: '10' 
-}
-
-const quest2 = { 
-  wineType: [ 'red', 'white' ],
-  varietal: [ 'cabernet', 'sauvignonBlanc' ],
-  price: [ '10', '20', '70' ] 
-}
-
-// what to do if leave varietal blank
-// if the person says they like red but dont indicate a varietal what do i do
-
-const trainingSet = [
-  {
-    input: [0, 0, 0, 0, 0, .2],
-    output: [1]
-  },
-  {
-    input: [0, 0, 0, 0, 0, .9],
-    output: [0]
-  },
-  {
-    input: [0, 0, 0, 0, 0, .4],
-    output: [1]
-  },
-  {
-    input: [0, 0, 0, 0, 0, .1],
-    output: [1]
-  },
-  {
-    input: [0, 0, 0, 0, 0, .8],
-    output: [0]
-  },
-  {
-    input: [0, 0, 0, 0, 0, .6],
-    output: [0]
-  },
-]
-
 module.exports.transformQuestToTrainingData = transformQuestToTrainingData;
