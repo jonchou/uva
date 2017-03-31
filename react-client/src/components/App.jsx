@@ -56,6 +56,10 @@ class App extends React.Component {
     this.init();
   }
 
+  componentDidUpdate() {
+    ;
+  }
+
   handleUserWantsHome(event) {
     this.setState({
       userWantsHomePage: true,
@@ -264,6 +268,8 @@ class App extends React.Component {
         </div>
       )
 
+    console.log('this.state.topReds', this.state.topReds)
+
     return (
       <div className = 'container'>
         <Router>
@@ -279,20 +285,23 @@ class App extends React.Component {
               </Link>
               <div className = 'heroImageContainer'>
                 <div className = 'heroContentWrapper'>
+                Uva 2.Grape
                   <Search className ='SearchBar' search={this.search} />
                 </div>
               </div>    
             </div>
             <div>
-              <Nav wineRoutes={wineRoutes} />
-                  <hr/>
+              <div className='trendingWineListWrapper'>
+                  <Nav wineRoutes={wineRoutes} />
+                <hr/>
+              </div>
                   <Route exact path='/' component={Homepage}/>
                   <Route path='/products' component={Products}/>
                   <Route path='/product/overview' component={ProductOverviewComp}/>
                   {wineRoutes.map((route, index) => (
                     <Route
                       key={index}
-                      path={route.path}
+                      exact path={route.path}
                       component={() => (
                         <WineList
                         handleClickedProductEntry={this.handleClickedProductEntry}
