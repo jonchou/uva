@@ -22,9 +22,7 @@ module.exports.init = function(req, res) {
           wines.top10Whites = topWhites;
           NNUtils.recommendations(req.user)
             .then((recommendations) => {
-              wines.topRated = recommendations.map((wine) => {
-                return wine.details;
-              }).filter((wine, i) => {
+              wines.topRated = recommendations.filter((wine, i) => {
                 return i < 10;
               })
               res.send(wines);
