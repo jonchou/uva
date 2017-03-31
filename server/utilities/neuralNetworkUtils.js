@@ -5,11 +5,11 @@ const synaptic = require("synaptic");
 
 const convertWinetoNeuron = (wine) => {
   let type = wine.redORwhite === 'Red Wines' ? 1 : 0;
-  let price = wine.priceMin / 100;
   let cab = wine.type === 'Cabernet Sauvignon' ? 1 : 0;
   let merlot = wine.type === 'Merlot' ? 1 : 0;
   let chard = wine.type === 'Chardonnay' ? 1 : 0;
   let sauv = wine.type === 'Sauvignon Blanc' ? 1 : 0;
+  let price = wine.priceMin / 100;
   wine.neurons = [type, cab, merlot, chard, sauv, price];
   return wine;
 }

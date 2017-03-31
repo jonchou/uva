@@ -66,9 +66,7 @@ app.post('/search', requesthandler.search);
 app.post('/review', requesthandler.review);
 app.post('/reviews', requesthandler.reviews);
 app.post('/train', function(req, res) {
-
-  // nnUtils.transformQuestToTrainingData(req.body);
-
+  //const trainingData = nnUtils.transformQuestResultsToTrainingData(req.body);
   console.log('body: ', req.body);
   res.send('received form data');
 });
