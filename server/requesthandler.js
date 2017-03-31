@@ -2,6 +2,7 @@ var Product = require('./models/product.js');
 var User = require('./models/user.js');
 var Review = require('./models/review.js');
 var wineApiUtils = require('./utilities/wineApiUtils.js');
+var NNUtils = require('./utilities/neuralNetworkUtils.js');
 
 module.exports.init = function(req, res) {
   var wines = {
@@ -9,7 +10,6 @@ module.exports.init = function(req, res) {
     top10Wines: [],
     topRated: [],
   };
-
   Product.top10Reds(function(error, topReds) {
     if (error) {
       res.send(error);
@@ -20,7 +20,16 @@ module.exports.init = function(req, res) {
           res.send(error)
         } else {
           wines.top10Whites = topWhites;
-          res.send(wines);
+          NNUtils.recommendations(req.user)
+            .then((recommendations) => {
+              wines.topRated = recommendations.filter((wine, i) => {
+                return i < 10;
+              })
+              res.send(wines);
+            })
+            .catch((err) => {
+              res.send(err);
+            })
         }
       });
     }

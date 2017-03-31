@@ -37,7 +37,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 passport.serializeUser((user, done) => {
   // user is returned as an object within an array
   if (user) {
-    done(null, user[0].accessToken);
+    done(null, user[0].name);
   } else {
     done(null, 'first time user');
   }
@@ -57,7 +57,6 @@ app.get('/login/facebook',
 
 app.get('/login/facebook/callback', 
   passport.authenticate('facebook', { failureRedirect: '/login',
-    // session: false,
     successRedirect: '/'
   })
 );
