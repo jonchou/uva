@@ -20,20 +20,6 @@ class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      wineRoutes: [
-        { path: '/reds',
-          title: 'Top Reds',
-          wines: () => { this.state.topReds ? this.state.topReds: null },
-        },
-        { path: '/whites',
-          title: 'Top Whites',
-          wines: () => { this.state.topWhites ? this.state.topWhites: null },
-        },
-        { path: '/uvaschoices',
-          title: 'Uva\'s Choices',
-          wines: () => { this.state.topRated ? this.state.topRated: null },
-        },
-      ], 
       products: [],
       // reviews: [],
       topReds: [],
@@ -223,6 +209,23 @@ class App extends React.Component {
   }
 
   render () {
+
+      var wineRoutes = [
+        { path: '/reds',
+          title: 'Top Reds',
+          wines: this.state.topReds,
+        },
+        { path: '/whites',
+          title: 'Top Whites',
+          wines: this.state.topWhites,
+        },
+        { path: '/uvaschoices',
+          title: 'Uva\'s Choices',
+          wines: this.state.topRated,
+        },
+      ]
+
+      console.log('wineRoutes', wineRoutes)
       
       const Products = () => (
         <ProductList 
@@ -266,7 +269,7 @@ class App extends React.Component {
         <Router>
           <div>
             <div className = 'topBackgroundImageWrapper'>
-              <Link to='/'>
+              <Link to='/'>  
                 <TopBar 
                   username={this.state.username} 
                   userLoggedIn={this.state.userLoggedIn} 
@@ -281,23 +284,23 @@ class App extends React.Component {
               </div>    
             </div>
             <div>
-              <Nav wineRoutes={this.state.wineRoutes} />
+              <Nav wineRoutes={wineRoutes} />
                   <hr/>
                   <Route exact path='/' component={Homepage}/>
                   <Route path='/products' component={Products}/>
                   <Route path='/product/overview' component={ProductOverviewComp}/>
-                  {this.state.wineRoutes.map((route, index) => {
+                  {wineRoutes.map((route, index) => (
                     <Route
                       key={index}
                       path={route.path}
-                      component={() => {
+                      component={() => (
                         <WineList
                         handleClickedProductEntry={this.handleClickedProductEntry}
                         wines={route.wines}
-                      />
-                      }}
+                        />
+                      )}
                     />
-                  })}
+                  ))}
             </div>
           </div>
         </Router>

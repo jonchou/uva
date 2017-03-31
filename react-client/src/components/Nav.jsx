@@ -20,7 +20,6 @@ class Nav extends React.Component {
     )
 
     return (
-      <div>Hi there
         <div className='bestCategory trendingCategory'>
           {this.props.wineRoutes.map((route, index) => (
             <div key={index}>
@@ -36,7 +35,6 @@ class Nav extends React.Component {
             </div>
           ))}
         </div>
-      </div>
     )
   }
 }
