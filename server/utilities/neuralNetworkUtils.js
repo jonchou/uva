@@ -25,14 +25,13 @@ module.exports.recommendations = (username) => {
         .then((user) => {
           if (user[0]) {
             profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
+            return wines.map((wine) => {
+              wine.rating = profile.activate(wine.neurons)[0];
+              return wine;
+            }).sort((a, b) => {
+              return b.rating - a.rating;
+            });
           }
-          wines = wines.map((wine) => {
-            wine.rating = profile.activate(wine.neurons)[0];
-            return wine;
-          })
-          return wines.sort((a, b) => {
-            return b.rating - a.rating;
-          });
         })
     })
 }
