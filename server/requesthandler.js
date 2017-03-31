@@ -4,6 +4,7 @@ var Review = require('./models/review.js');
 const Like = require('./models/likes.js');
 var wineApiUtils = require('./utilities/wineApiUtils.js');
 var NNUtils = require('./utilities/neuralNetworkUtils.js');
+const NN = require('./neural-network.js');
 
 module.exports.init = function(req, res) {
   var wines = {
@@ -159,3 +160,25 @@ module.exports.likes = (req, res) => {
       })
     }
 }
+
+module.exports.train = function(req, res) {
+  // console.log('body: ', req.body);
+  const trainingData = nnUtils.transformQuestResultsToTrainingData(req.body);
+  User.findUser(req.user)
+    .then((user) => {
+
+    }
+
+  var trainedNN = NN.train(NN, trainingData);
+
+  User.updateUserNN 
+  // console.log(trainingData);
+
+  // for the user that is currently signed in, retrieve their neural network
+    // pass in training data to their neural network 
+    // store updated neural network in db
+
+
+  res.send('received form data');
+}
+

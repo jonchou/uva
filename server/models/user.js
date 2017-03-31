@@ -36,3 +36,15 @@ module.exports.createUser = (username, accessToken) => {
     })
   })
 }
+
+module.exports.updateUserNN = (username, NN) => {
+  return new Promise ((resolve, reject) => {
+    User.findOneAndUpdate({name: username}, {$set:{recommendation_profile:NN}}, {new: true}, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
