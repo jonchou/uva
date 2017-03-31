@@ -16,10 +16,25 @@ import {
   Link
 } from 'react-router-dom';
 
+
 class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
+      allWines: {
+        reds: {
+          path: '/reds',
+          title: 'Top Reds',
+        },
+        whites: {
+          path: '/whites',
+          title: 'Top Whites',
+        },
+        uvas: {
+          path: '/uvaschoices',
+          title: 'Uva\'s Choices',
+        },
+      },
       products: [],
       // reviews: [],
       topReds: [],
@@ -50,6 +65,7 @@ class App extends React.Component {
     this.handleUserWantsProductList = this.handleUserWantsProductList.bind(this);
     this.handleClickedProductEntry = this.handleClickedProductEntry.bind(this);
     // this.showProductsList = this.showProductsList.bind(this);
+    this.mapWinesIntoArray = this.mapWinesIntoArray.bind(this);
   }
 
   componentDidMount(){
@@ -82,10 +98,10 @@ class App extends React.Component {
     $.ajax({
       url: '/init',
       success: function (data) {
-        context.setState({
-          topReds: data.top10Reds,
-          topWhites: data.top10Whites,
-          topRated: data.topRated,
+        context.setState(() => {
+          context.state.allWines.reds.wines = data.top10Reds;
+          context.state.allWines.whites.wines = data.top10Whites;
+          context.state.allWines.uvas.wines = data.topRated;
         })
       },
       error: function(error) {
@@ -184,11 +200,11 @@ class App extends React.Component {
   showHomePageWines () {
     if (!this.state.userClickedEntry) {
       return <HomePageWines
-              topReds={this.state.topReds} 
-              topWhites={this.state.topWhites} 
-              topRated={this.state.topRated}
+              topReds={this.state.allWines.reds.wines} 
+              topWhites={this.state.allWines.whites.wines} 
+              topRated={this.state.allWines.uvas.wines}
               handleClickedProductEntry={this.handleClickedProductEntry}
-              />;
+            />;
     } else {
       return <ProductOverview
               reviews={this.state.reviews}
@@ -212,22 +228,17 @@ class App extends React.Component {
     }
   }
 
+  mapWinesIntoArray () {
+    const results = [];
+    for (const wineType in this.state.allWines) {
+      results.push(this.state.allWines[wineType]);
+    }
+    return results;
+  }
+
   render () {
 
-      var wineRoutes = [
-        { path: '/reds',
-          title: 'Top Reds',
-          wines: this.state.topReds,
-        },
-        { path: '/whites',
-          title: 'Top Whites',
-          wines: this.state.topWhites,
-        },
-        { path: '/uvaschoices',
-          title: 'Uva\'s Choices',
-          wines: this.state.topRated,
-        },
-      ]
+      const wineRoutes = Object.values(this.state.allWines);
 
       console.log('wineRoutes', wineRoutes)
       
@@ -246,9 +257,9 @@ class App extends React.Component {
 
       const Homepage = () => (
         <HomePageWines
-          topReds={this.state.topReds} 
-          topWhites={this.state.topWhites} 
-          topRated={this.state.topRated}
+          topReds={this.state.allWines.reds.wines} 
+          topWhites={this.state.allWines.whites.wines} 
+          topRated={this.state.allWines.uvas.wines}
           handleClickedProductEntry={this.handleClickedProductEntry}
         />
       )
@@ -262,13 +273,9 @@ class App extends React.Component {
         />
       )
 
-      const Dummy = () => (
-        <div>
-          <h2>Hello World</h2>
-        </div>
-      )
+      
 
-    console.log('this.state.topReds', this.state.topReds)
+        
 
     return (
       <div className = 'container'>
@@ -293,6 +300,8 @@ class App extends React.Component {
             <div>
               <div className='trendingWineListWrapper'>
                   <Nav wineRoutes={wineRoutes} />
+              </div>
+              <div>
                 <hr/>
               </div>
                   <Route exact path='/' component={Homepage}/>
