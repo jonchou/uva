@@ -5,7 +5,6 @@ var fbAppId = config.fbAppId;
 
 module.exports = {
 
-
   topRed: function(price, callback) {
     var options = {
       method: 'GET',
