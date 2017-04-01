@@ -261,9 +261,9 @@ class App extends React.Component {
 
     const Homepage = () => (
       <HomePageWines
-        topReds={this.state.allWines.reds.wines} 
-        topWhites={this.state.allWines.whites.wines} 
-        topRated={this.state.allWines.uvas.wines}
+        topReds={this.state.allWines.reds.wines && this.state.allWines.reds.wines.slice(0, 10)}
+        topWhites={this.state.allWines.whites.wines && this.state.allWines.whites.wines.slice(0, 10)}
+        topRated={this.state.allWines.uvas.wines && this.state.allWines.uvas.wines.slice(0, 10)}
         handleClickedProductEntry={this.handleClickedProductEntry}
         postLike={this.postLike}
       />

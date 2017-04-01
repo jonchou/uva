@@ -10,7 +10,6 @@ var WineList = ({handleClickedProductEntry, wines, postLike, choice}) => (
             handleClickedProductEntry={handleClickedProductEntry}
             wine={wine}
             postLike={postLike}
-            choice={choice}
           />
         </li>
       )}

@@ -3,27 +3,24 @@ import WineList from './WineList.jsx';
 
 var HomePageWines = ({topReds, topWhites, topRated, handleClickedProductEntry, postLike}) => (
   <div className='topItemsWrapper'>
-    <div className='trendingWineListWrapper'>
+    <div>
       <WineList
         handleClickedProductEntry={handleClickedProductEntry}
         wines={topReds}
-        postLike={postLike}
       />
     </div>
-    <div className='bestValueWineListWrapper'>
+    <div>
       <WineList
         handleClickedProductEntry={handleClickedProductEntry}
         wines={topWhites}
-        postLike={postLike}
       />
     </div>
 
-    <div className='UvasChoiceWineListWrapper'>
+    <div>
       <WineList
         handleClickedProductEntry={handleClickedProductEntry}
         wines={topRated}
         postLike={postLike}
-        choice={true}
       />
     </div>
   </div>

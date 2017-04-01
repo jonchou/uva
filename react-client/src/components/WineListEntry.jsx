@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-var WineListEntry = ({handleClickedProductEntry, wine, postLike, choice}) => (
+var WineListEntry = ({handleClickedProductEntry, wine, postLike}) => (
   <div className='productEntryFlexbox'>
   <Link to='/product/overview'>
     <div className='entryFlexItem' onClick={() => { handleClickedProductEntry(wine) }} >
@@ -12,7 +12,7 @@ var WineListEntry = ({handleClickedProductEntry, wine, postLike, choice}) => (
   </Link>
     <div className='flexItemRight'>
       <h4>Rating: {wine.apiRating/20}</h4>
-      {choice && (
+      {postLike && (
         <div>
           <input type="button" value="Like" onClick={() => {postLike(wine, 1)}} />
           <input type="button" value="Dislike" onClick={() => {postLike(wine, 0)}} />
