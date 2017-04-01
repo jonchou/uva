@@ -8,24 +8,24 @@ const NN = require('./neural-network.js');
 
 module.exports.init = function(req, res) {
   var wines = {
-    top10Reds: [],
-    top10Whites: [],
+    top30Reds: [],
+    top30Whites: [],
     topRated: [],
   };
-  Product.top10Reds(function(error, topReds) {
+  Product.top30Reds(function(error, topReds) {
     if (error) {
       res.send(error);
     } else {
-      wines.top10Reds = topReds;
-      Product.top10Whites(function(error, topWhites) {
+      wines.top30Reds = topReds;
+      Product.top30Whites(function(error, topWhites) {
         if(error){
           res.send(error)
         } else {
-          wines.top10Whites = topWhites;
+          wines.top30Whites = topWhites;
           NNUtils.recommendations(req.user)
             .then((recommendations) => {
               wines.topRated = recommendations.filter((wine, i) => {
-                return i < 10;
+                return i < 30;
               })
               return Like.addLikesToWines(req.user, wines.topRated)
             })

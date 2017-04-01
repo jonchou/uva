@@ -7,8 +7,9 @@ import TopBar from './TopBar.jsx';
 import ProductOverview from './productOverview.jsx';
 import Questionnaire from './Questionnaire.jsx';
 import HomePageWines from './HomePageWines.jsx';
-import Nav from './Nav.jsx'
-import WineList from './WineList.jsx'
+import Nav from './Nav.jsx';
+import WineList from './WineList.jsx';
+import TripleList from './TripleList.jsx';
 
 import {
   BrowserRouter as Router,
@@ -43,10 +44,10 @@ class App extends React.Component {
       },
       products: [],
       // reviews: [],
-      topReds: [],
-      topWhites: [],
-      topRated: [],
-      uvasChoice: [],
+      // topReds: [],
+      // topWhites: [],
+      // topRated: [],
+      // uvasChoice: [],
       searchQuery: '',
       searchHistory: [],
       userHasSearched: false,
@@ -89,8 +90,8 @@ class App extends React.Component {
       url: '/init',
       success: function (data) {
         context.setState(() => {
-          context.state.allWines.reds.wines = data.top10Reds;
-          context.state.allWines.whites.wines = data.top10Whites;
+          context.state.allWines.reds.wines = data.top30Reds;
+          context.state.allWines.whites.wines = data.top30Whites;
           context.state.allWines.uvas.wines = data.topRated;
         })
       },
@@ -277,6 +278,16 @@ class App extends React.Component {
       />
     )
 
+    const Triplelist = (wines, choice) => (
+      <TripleList
+        first={wines.slice(0, 10)}
+        second={wines.slice(10, 20)}
+        third={wines.slice(20, 30)}
+        handleClickedProductEntry={this.handleClickedProductEntry}
+        postLike={choice ? this.postLike : undefined}
+      />
+    )
+
     return (
       <div className = 'container'>
         <Router>
@@ -315,14 +326,9 @@ class App extends React.Component {
                 <Route
                   key={index}
                   exact path={route.path}
-                  component={() => (
-                    <WineList
-                      handleClickedProductEntry={this.handleClickedProductEntry}
-                      wines={route.wines}
-                      postLike={this.postLike}
-                      choice={route.choice}
-                    />
-                  )}
+                  component={() => {
+                    return Triplelist(route.wines, route.choice);
+                  }}
                 />
               ))}
             </div>
