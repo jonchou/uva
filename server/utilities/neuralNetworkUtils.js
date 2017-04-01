@@ -16,23 +16,24 @@ const convertWinetoNeuron = (wine) => {
 
 module.exports.recommendations = (username) => {
   let profile = null;
+  let wines = null;
   return Product.allWines()
-    .then((wines) => {
-      wines = wines.map((wine) => {
+    .then((allWines) => {
+      wines = allWines.map((wine) => {
         return convertWinetoNeuron(wine);
       })
       return User.findUser(username)
-        .then((user) => {
-          if (user[0]) {
-            profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
-            return wines.map((wine) => {
-              wine.rating = profile.activate(wine.neurons)[0];
-              return wine;
-            }).sort((a, b) => {
-              return b.rating - a.rating;
-            });
-          }
-        })
+    })
+    .then((user) => {
+      if (user[0]) {
+        profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
+        return wines.map((wine) => {
+          wine.rating = profile.activate(wine.neurons)[0];
+          return wine;
+        }).sort((a, b) => {
+          return b.rating - a.rating;
+        });
+      }
     })
 }
 
@@ -47,13 +48,13 @@ module.exports.retrain = (username, wine, like) => {
           output: like
         }];
         profile = NN.train(profile, trainingSet);
-        User.updateUserNN(username, profile)
-          .then((response) => {
-            return 'success training NN';
-          })
+        return User.updateUserNN(username, profile)
       } else {
-        return 'user not found';
+        return Promise.reject('user not found');
       }
+    })
+    .then((response) => {
+      return 'success training NN';
     })
 }
 
