@@ -29,8 +29,8 @@ module.exports.init = function(req, res) {
               })
               return Like.addLikesToWines(req.user, wines.topRated)
             })
-            .then((response) => {
-              wines.topRated = response;
+            .then((topRatedWithLikes) => {
+              wines.topRated = topRatedWithLikes;
               res.send(wines);
             })
             .catch((err) => {
