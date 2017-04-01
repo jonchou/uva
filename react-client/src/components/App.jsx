@@ -36,6 +36,11 @@ class App extends React.Component {
           choice: 'true',
         },
       },
+      navSelection: {
+        0: '',
+        1: '',
+        2: ''
+      },
       products: [],
       // reviews: [],
       topReds: [],
@@ -47,7 +52,6 @@ class App extends React.Component {
       userHasSearched: false,
       userWantsLogin: false,
       userLoggedIn: false,
-      userWantsHomePage: true,
       username: '',
       userID: '',
       invalidPasswordAttempt: false,
@@ -58,7 +62,6 @@ class App extends React.Component {
     }
 
     this.search = this.search.bind(this);
-    this.handleUserWantsHome = this.handleUserWantsHome.bind(this);
     this.submitReview = this.submitReview.bind(this);
     this.getReviews = this.getReviews.bind(this);
     this.init = this.init.bind(this);
@@ -66,20 +69,11 @@ class App extends React.Component {
     this.handleClickedProductEntry = this.handleClickedProductEntry.bind(this);
     this.mapWinesIntoArray = this.mapWinesIntoArray.bind(this);
     this.postLike = this.postLike.bind(this);
+    this.handleClickedNavItem = this.handleClickedNavItem.bind(this);
   }
 
   componentDidMount(){
     this.init();
-  }
-
-  handleUserWantsHome(event) {
-    this.setState({
-      userWantsHomePage: true,
-      userHasSearched: false,
-      userWantsLogin: false,
-      userWantsProductList: false,
-      userClickedEntry: false,
-    })
   }
 
   handleUserWantsProductList(event){
@@ -165,8 +159,7 @@ class App extends React.Component {
     this.setState({
       searchHistory: searchHistory,
       userHasSearched: true,
-      userWantsProductList: true,
-      userWantsHomePage: false
+      userWantsProductList: true
     })
     console.log('query inside search', query);
     console.log('price inside search', price);
@@ -219,10 +212,23 @@ class App extends React.Component {
         userClickedEntry: true,
         currentWine: {
           wine: wine
-        },
-        userWantsHomePage: false
+        }
       })
     }
+  }
+
+  handleClickedNavItem(index) {
+    var selection = {
+      navSelection: {
+        0: '',
+        1: '',
+        2: ''
+      }
+    };
+    if (index !== -1) {
+      selection.navSelection[index] = 'active';
+    }
+    this.setState(selection);
   }
 
   mapWinesIntoArray () {
@@ -282,6 +288,7 @@ class App extends React.Component {
                   userLoggedIn={this.state.userLoggedIn} 
                   handleUserWantsLogin={this.handleUserWantsLogin} 
                   userHasSearched={this.state.userHasSearched}
+                  handleClickedNavItem={this.handleClickedNavItem}
                 />
               </Link>
               <div className = 'heroImageContainer'>
@@ -292,7 +299,11 @@ class App extends React.Component {
               </div>    
             </div>
             <div>
-              <Nav wineRoutes={wineRoutes} />
+              <Nav
+                wineRoutes={wineRoutes}
+                handleClickedNavItem={this.handleClickedNavItem}
+                selection={this.state.navSelection}
+              />
               <hr/>
             </div>
             <div>
