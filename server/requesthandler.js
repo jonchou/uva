@@ -4,6 +4,7 @@ var Review = require('./models/review.js');
 const Like = require('./models/likes.js');
 var wineApiUtils = require('./utilities/wineApiUtils.js');
 var NNUtils = require('./utilities/neuralNetworkUtils.js');
+const NN = require('./neural-network.js');
 
 module.exports.init = function(req, res) {
   var wines = {
@@ -158,4 +159,23 @@ module.exports.likes = (req, res) => {
         res.end();
       })
     }
+}
+
+module.exports.train = function(req, res) {
+  const trainingData = NNUtils.transformQuestResultsToTrainingData(req.body);
+  return User.findUser(req.user)
+    .then((user) => {
+      const trainedNN = NN.train(user[0].recommendation_profile, trainingData);
+      const profile = trainedNN.toJSON();
+      return User.updateUserNN(req.user, profile)
+    })
+    .then(() => {
+      // might want to change this to response to a redirect once we incorporate the form 
+      res.send('trained NN');
+    })
+    .catch((err) => {
+      console.error(err);
+      res.writeHead(500);
+      res.end();
+    })
 }

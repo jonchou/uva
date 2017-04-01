@@ -5,7 +5,8 @@ module.exports.newUserNN = () => {
 }
 
 module.exports.train = (NN, trainingSet) => {
-  const newUserTrainer = new synaptic.Trainer(NN);
+  const parsedNN = synaptic.Network.fromJSON(NN);
+  const newUserTrainer = new synaptic.Trainer(parsedNN);
   newUserTrainer.train(trainingSet);
-  return NN;
+  return parsedNN;
 }

@@ -8,7 +8,6 @@ var ppUtils = require('./utilities/passportUtils.js');
 var path = require('path');
 var requesthandler = require('./requesthandler.js');
 var User = require('./models/user.js');
-var nnUtils = require('./utilities/neuralNetworkUtils.js');
 
 //initializing Passport with FB OAuth
 passport.use(new FacebookStrategy({
@@ -65,13 +64,7 @@ app.get('/getWines', requesthandler.getWines);
 app.post('/search', requesthandler.search);
 app.post('/review', requesthandler.review);
 app.post('/reviews', requesthandler.reviews);
-app.post('/train', function(req, res) {
-
-  // nnUtils.transformQuestToTrainingData(req.body);
-
-  console.log('body: ', req.body);
-  res.send('received form data');
-});
+app.post('/train', requesthandler.train);
 app.post('/likes', requesthandler.likes);
 
 var port = process.env.PORT || 3000;
