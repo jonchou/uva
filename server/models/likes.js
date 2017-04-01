@@ -30,7 +30,7 @@ module.exports.addLikesToWines = (username, wines) => {
           likedWines[wine.product_id] = wine.like;
         })
         wines = wines.map((wine) => {
-          if (likedWines[wine._id]) {
+          if (likedWines[wine._id] !== undefined) {
             wine.like = likedWines[wine._id];
           } else {
             wine.like = null;
