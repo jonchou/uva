@@ -192,11 +192,11 @@ class App extends React.Component {
     })
   }
 
-  postLike (wine, likeDislike) {
+  postLike (wine, likeOrDislike) {
     const likeData = {
       wine: wine
     };
-    likeData.wine.like = likeDislike;
+    likeData.wine.like = likeOrDislike;
 
     $.ajax({
       url: 'likes',
@@ -210,7 +210,6 @@ class App extends React.Component {
         console.error(err);
       }
     })
-
   }
 
   handleClickedProductEntry(wine) {
