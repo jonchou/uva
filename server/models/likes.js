@@ -29,9 +29,9 @@ module.exports.addLikesToWines = (username, wines) => {
         likes.forEach((wine) => {
           likedWines[wine.product_id] = wine.like;
         })
-        wines.topRated = wines.topRated.map((wine) => {
-          if (likes[wine._id]) {
-            wine.like = likes[wine._id];
+        wines = wines.map((wine) => {
+          if (likedWines[wine._id]) {
+            wine.like = likedWines[wine._id];
           } else {
             wine.like = null;
           }

@@ -1,6 +1,7 @@
 const NN = require('../neural-network.js');
 const Product = require('../models/product.js');
 const User = require('../models/user.js');
+const Like = require('../models/likes.js');
 const synaptic = require("synaptic");
 
 const addNeuronToWine = (wine) => {
@@ -27,19 +28,24 @@ module.exports.recommendations = (username) => {
     .then((user) => {
       if (user[0]) {
         profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
-        return wines.map((wine) => {
+        const sortedWines = wines.map((wine) => {
           wine.rating = profile.activate(wine.neurons)[0];
           return wine;
         }).sort((a, b) => {
           return b.rating - a.rating;
         });
+        return Like.addLikesToWines(username, sortedWines);
       }
+    })
+    .then((winesWithLikes) => {
+      return winesWithLikes.filter((wine) => {
+        return wine.like === null;
+      })
     })
 }
 
 module.exports.retrain = (username, wine, like) => {
   const neurons = addNeuronToWine(wine).neurons;
-  //console.log(username, wine, like, neurons);
   return User.findUser(username)
     .then((user) => {
       if (user[0]) {

@@ -27,10 +27,11 @@ module.exports.init = function(req, res) {
               wines.topRated = recommendations.filter((wine, i) => {
                 return i < 10;
               })
-              return Like.addLikesToWines(req.user, wines)
+              return Like.addLikesToWines(req.user, wines.topRated)
             })
             .then((response) => {
-              res.send(response);
+              wines.topRated = response;
+              res.send(wines);
             })
             .catch((err) => {
               res.send(err);
