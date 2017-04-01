@@ -63,8 +63,8 @@ class App extends React.Component {
     this.init = this.init.bind(this);
     this.handleUserWantsProductList = this.handleUserWantsProductList.bind(this);
     this.handleClickedProductEntry = this.handleClickedProductEntry.bind(this);
-    // this.showProductsList = this.showProductsList.bind(this);
     this.mapWinesIntoArray = this.mapWinesIntoArray.bind(this);
+    this.postLike = this.postLike.bind(this);
   }
 
   componentDidMount(){
@@ -192,6 +192,26 @@ class App extends React.Component {
     })
   }
 
+  postLike (wine, likeOrDislike) {
+    const likeData = {
+      wine: wine
+    };
+    likeData.wine.like = likeOrDislike;
+
+    $.ajax({
+      url: 'likes',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(likeData),
+      success: function(data) {
+        console.log('data returned by postLike', data)
+      },
+      error: function(err) {
+        console.error(err);
+      }
+    })
+  }
+
   handleClickedProductEntry(wine) {
     console.log('inside clicked product entry', wine);
     if (wine) {
@@ -238,6 +258,7 @@ class App extends React.Component {
         topWhites={this.state.allWines.whites.wines} 
         topRated={this.state.allWines.uvas.wines}
         handleClickedProductEntry={this.handleClickedProductEntry}
+        postLike={this.postLike}
       />
     )
 
@@ -286,6 +307,7 @@ class App extends React.Component {
                     <WineList
                       handleClickedProductEntry={this.handleClickedProductEntry}
                       wines={route.wines}
+                      postLike={this.postLike}
                     />
                   )}
                 />

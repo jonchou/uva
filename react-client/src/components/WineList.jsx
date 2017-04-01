@@ -1,7 +1,7 @@
 import React from 'react';
 import WineListEntry from './WineListEntry.jsx';
 
-var WineList = ({handleClickedProductEntry, wines}) => (
+var WineList = ({handleClickedProductEntry, wines, postLike}) => (
   <div className='bestCategory'>
     <ol>
       {wines && wines.map(wine =>
@@ -9,6 +9,7 @@ var WineList = ({handleClickedProductEntry, wines}) => (
           <WineListEntry
             handleClickedProductEntry={handleClickedProductEntry}
             wine={wine}
+            postLike={postLike}
           />
         </li>
       )}
