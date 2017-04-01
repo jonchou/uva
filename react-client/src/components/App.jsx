@@ -284,7 +284,6 @@ class App extends React.Component {
                   userHasSearched={this.state.userHasSearched}
                 />
               </Link>
-              <Questionnaire />
               <div className = 'heroImageContainer'>
                 <div className = 'heroContentWrapper'>
                   Uva 2.Grape
