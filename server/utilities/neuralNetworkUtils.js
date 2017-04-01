@@ -42,7 +42,7 @@ module.exports.retrain = (username, wine, like) => {
   return User.findUser(username)
     .then((user) => {
       if (user[0]) {
-        let profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
+        let profile = user[0].recommendation_profile;
         const trainingSet = [{
           input: neurons,
           output: like

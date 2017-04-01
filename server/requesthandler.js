@@ -170,6 +170,7 @@ module.exports.train = function(req, res) {
       return User.updateUserNN(req.user, profile)
     })
     .then(() => {
+      // might want to change this to response to a redirect once we incorporate the form 
       res.send('trained NN');
     })
     .catch((err) => {
