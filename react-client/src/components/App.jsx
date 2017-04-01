@@ -194,16 +194,15 @@ class App extends React.Component {
   }
 
   postLike (wine, likeOrDislike) {
-    const likeData = {
-      wine: wine
-    };
-    likeData.wine.like = likeOrDislike;
+    wine.like = likeOrDislike;
 
     $.ajax({
-      url: 'likes',
+      url: '/likes',
       type: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify(likeData),
+      data: JSON.stringify({
+        wine: wine
+      }),
       success: function(data) {
         console.log('data returned by postLike', data)
       },
@@ -224,10 +223,6 @@ class App extends React.Component {
         userWantsHomePage: false
       })
     }
-  }
-
-  postLike(wine, likeOrDislike) {
-    
   }
 
   mapWinesIntoArray () {
