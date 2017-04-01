@@ -33,6 +33,7 @@ class App extends React.Component {
         uvas: {
           path: '/uvaschoices',
           title: 'Uva\'s Choices',
+          choice: 'true',
         },
       },
       products: [],
@@ -225,6 +226,10 @@ class App extends React.Component {
     }
   }
 
+  postLike(wine, likeOrDislike) {
+    
+  }
+
   mapWinesIntoArray () {
     const results = [];
     for (const wineType in this.state.allWines) {
@@ -308,6 +313,7 @@ class App extends React.Component {
                       handleClickedProductEntry={this.handleClickedProductEntry}
                       wines={route.wines}
                       postLike={this.postLike}
+                      choice={route.choice}
                     />
                   )}
                 />

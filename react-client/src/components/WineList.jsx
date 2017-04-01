@@ -1,19 +1,20 @@
 import React from 'react';
 import WineListEntry from './WineListEntry.jsx';
 
-var WineList = ({handleClickedProductEntry, wines, postLike}) => (
+var WineList = ({handleClickedProductEntry, wines, postLike, choice}) => (
   <div className='bestCategory'>
-    <ol>
+    <ul>
       {wines && wines.map(wine =>
         <li key={wine._id}>
           <WineListEntry
             handleClickedProductEntry={handleClickedProductEntry}
             wine={wine}
             postLike={postLike}
+            choice={choice}
           />
         </li>
       )}
-    </ol>
+    </ul>
   </div>
 );
 
