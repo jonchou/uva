@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-var WineListEntry = ({handleClickedProductEntry, wine}) => (
+var WineListEntry = ({handleClickedProductEntry, wine, postLike}) => (
   <Link to='/product/overview'>
   <div
     className='productEntryFlexbox'
