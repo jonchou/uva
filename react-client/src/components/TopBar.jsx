@@ -12,10 +12,9 @@ class TopBar extends React.Component {
     this.state = {};
   }
 
-
   render(){
     var signup = (<button className='flexItem flexEdge' onClick={this.props.handleUserWantsSignUp} value='signup'>Sign Up</button>);
-    var home = (<button onClick={this.props.handleUserWantsHome} className='flexItem flexEdge' value='login'>Home</button>);
+    var home = (<button onClick={() => {this.props.handleClickedNavItem(-1)}} className='flexItem flexEdge' value='login'>Home</button>);
 
     return(
       <Link to='/'>

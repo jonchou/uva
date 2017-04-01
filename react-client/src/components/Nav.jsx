@@ -20,13 +20,13 @@ class Nav extends React.Component {
     )
 
     return (
-      <div>
+      <div className='nav'>
         {this.props.wineRoutes.map((route, index) => (
-          <Link to={route.path}>
-            <div className='nav'>
-                <h2>{route.title}</h2>
-            </div>
-          </Link>
+          <div className='navItem' key={index}>
+            <Link to={route.path}>
+              <h2 className={this.props.selection[index]} onClick={() => {this.props.handleClickedNavItem(index)}}>{route.title}</h2>
+            </Link>
+          </div>
         ))}
       </div>
     )
