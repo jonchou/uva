@@ -163,17 +163,17 @@ module.exports.likes = (req, res) => {
 
 module.exports.train = function(req, res) {
   const trainingData = nnUtils.transformQuestResultsToTrainingData(req.body);
+  console.log(trainingData);
   return User.findUser(req.user)
     .then((user) => {
       const trainedNN = NN.train(user.recommendation_profile, trainingData);
       return User.updateUserNN(req.user, trainedNN)
     })
     .then(() => {
-      res.send('received form data');
-      console.log('updated user\'s NN');
+      res.send('trained NN');
     })
     .catch((err) => {
-      console.error(err);
+      //console.error(err);
       res.writeHead(500);
       res.end();
     })
