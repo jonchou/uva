@@ -23,6 +23,7 @@ var HomePageWines = ({topReds, topWhites, topRated, handleClickedProductEntry, p
         handleClickedProductEntry={handleClickedProductEntry}
         wines={topRated}
         postLike={postLike}
+        choice={true}
       />
     </div>
   </div>
