@@ -144,16 +144,14 @@ module.exports.likes = (req, res) => {
     res.end();
   } else {
     Like.addLike(req.body.user, req.body.wine._id, req.body.wine.like)
-      .then((response) => {
+      .then(() => {
         return NNUtils.retrain(req.body.user, req.body.wine, req.body.wine.like)
       })
       .then((response) => {
-        if (response === 'success') {
-          res.end();
-        } else {
+        if (!response === 'success') {
           res.status(500);
-          res.end();
         }
+        res.end();
       })
       .catch((error) => {
         res.status(500);
