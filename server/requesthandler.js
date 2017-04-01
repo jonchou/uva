@@ -145,15 +145,15 @@ module.exports.likes = (req, res) => {
   } else {
     Like.addLike(req.body.user, req.body.wine._id, req.body.wine.like)
       .then((response) => {
-        NNUtils.retrain(req.body.user, req.body.wine, req.body.wine.like)
-          .then((response) => {
-            if (response === 'success') {
-              res.end();
-            } else {
-              res.status(500);
-              res.end();
-            }
-          })
+        return NNUtils.retrain(req.body.user, req.body.wine, req.body.wine.like)
+      })
+      .then((response) => {
+        if (response === 'success') {
+          res.end();
+        } else {
+          res.status(500);
+          res.end();
+        }
       })
       .catch((error) => {
         res.status(500);
