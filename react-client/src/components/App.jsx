@@ -63,8 +63,8 @@ class App extends React.Component {
     this.init = this.init.bind(this);
     this.handleUserWantsProductList = this.handleUserWantsProductList.bind(this);
     this.handleClickedProductEntry = this.handleClickedProductEntry.bind(this);
-    // this.showProductsList = this.showProductsList.bind(this);
     this.mapWinesIntoArray = this.mapWinesIntoArray.bind(this);
+    this.handleLike = this.handleLike.bind(this);
   }
 
   componentDidMount(){
@@ -190,6 +190,27 @@ class App extends React.Component {
         console.log(err)
       }
     })
+  }
+
+  handleLike (wine, likeDislike) {
+    const likeData = {
+      wine: wine
+    };
+    likeData.wine.like = likeDislike;
+
+    $.ajax({
+      url: 'likes',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(likeData),
+      success: function(data) {
+        console.log('data returned by like POST', data)
+      },
+      error: function(err) {
+        console.error(err);
+      }
+    })
+
   }
 
   handleClickedProductEntry(wine) {
