@@ -146,7 +146,7 @@ module.exports.likes = (req, res) => {
   } else {
     Like.addLike(req.user, req.body.wine._id, req.body.wine.like)
       .then(() => {
-        return NNUtils.retrain(req.body.user, req.body.wine, req.body.wine.like)
+        return NNUtils.retrain(req.user, req.body.wine, req.body.wine.like)
       })
       .then((response) => {
         if (!response === 'success') {
