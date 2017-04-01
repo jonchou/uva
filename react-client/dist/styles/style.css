@@ -144,7 +144,7 @@ ul li{
 }
 
 div input {
-  color: rgba(157, 82, 193, 0.88);
+  color: #603291;
   font-family: 'Josefin Sans', sans-serif;
   padding: 0.2em 1em;
   background-color: rgb(255, 255, 255);
@@ -187,10 +187,6 @@ form button:hover {
   padding: 1em;
   padding-top: 0em;
 }
-
-/*.passwordInput {
-  padding: 1em;
-}*/
 
 .submitButton input {
   color: rgba(157, 82, 193, 0.88);
@@ -524,11 +520,18 @@ hr {
 }
 
 .active {
-  /*text-decoration: underline;*/
   border: 3px;
   border-style: solid;
   border-radius: 15px;
   border-color: red;
   display: inline;
   padding: 10px;
+}
+
+.selected {
+  background-color: #40ed54;
+}
+
+.selectedDislike {
+  background-color: #ff5b5b;
 }
