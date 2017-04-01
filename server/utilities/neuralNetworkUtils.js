@@ -3,7 +3,7 @@ const Product = require('../models/product.js');
 const User = require('../models/user.js');
 const synaptic = require("synaptic");
 
-const convertWinetoNeuron = (wine) => {
+const addNeuronToWine = (wine) => {
   let type = wine.redORwhite === 'Red Wines' ? 1 : 0;
   let cab = wine.type === 'Cabernet Sauvignon' ? 1 : 0;
   let merlot = wine.type === 'Merlot' ? 1 : 0;
@@ -20,7 +20,7 @@ module.exports.recommendations = (username) => {
   return Product.allWines()
     .then((allWines) => {
       wines = allWines.map((wine) => {
-        return convertWinetoNeuron(wine);
+        return addNeuronToWine(wine);
       })
       return User.findUser(username)
     })
@@ -38,14 +38,15 @@ module.exports.recommendations = (username) => {
 }
 
 module.exports.retrain = (username, wine, like) => {
-  const neurons = convertWinetoNeuron(wine);
+  const neurons = addNeuronToWine(wine).neurons;
+  //console.log(username, wine, like, neurons);
   return User.findUser(username)
     .then((user) => {
       if (user[0]) {
         let profile = user[0].recommendation_profile;
         const trainingSet = [{
           input: neurons,
-          output: like
+          output: [like]
         }];
         profile = NN.train(profile, trainingSet);
         return User.updateUserNN(username, profile.toJSON())

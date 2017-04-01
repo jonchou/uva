@@ -140,7 +140,7 @@ module.exports.reviews = function(req, res) {
 }
 
 module.exports.likes = (req, res) => {
-  if (!req.body.wine || !req.body.wine.like || !req.user) {
+  if (!req.body.wine || !req.user) {
     res.status(400);
     res.end();
   } else {
