@@ -19,3 +19,27 @@ module.exports.getLikes = (username) => {
     })
   })
 }
+
+module.exports.addLikesToWines = (username, wines) => {
+  return new Promise((resolve, reject) => {
+    Like.find( {username: username }, (err, likes) => {
+      if (err) { reject(err); }
+      else {
+        const likedWines = {};
+        likes.forEach((wine) => {
+          likedWines[wine.product_id] = wine.like;
+        })
+        wines.topRated = wines.topRated.map((wine) => {
+          const newWine = wine;
+          if (likes[wine._id]) {
+            newWine.like = likes[wine._id];
+          } else {
+            newWine.like = null;
+          }
+          return newWine;
+        })
+        resolve(wines);
+      }    
+    })
+  })
+}
