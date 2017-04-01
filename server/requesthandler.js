@@ -162,18 +162,18 @@ module.exports.likes = (req, res) => {
 }
 
 module.exports.train = function(req, res) {
-  const trainingData = nnUtils.transformQuestResultsToTrainingData(req.body);
-  console.log(trainingData);
+  const trainingData = NNUtils.transformQuestResultsToTrainingData(req.body);
   return User.findUser(req.user)
     .then((user) => {
-      const trainedNN = NN.train(user.recommendation_profile, trainingData);
-      return User.updateUserNN(req.user, trainedNN)
+      const trainedNN = NN.train(user[0].recommendation_profile, trainingData);
+      const profile = trainedNN.toJSON();
+      return User.updateUserNN(req.user, profile)
     })
     .then(() => {
       res.send('trained NN');
     })
     .catch((err) => {
-      //console.error(err);
+      console.error(err);
       res.writeHead(500);
       res.end();
     })
