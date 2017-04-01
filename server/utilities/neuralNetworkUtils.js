@@ -48,7 +48,7 @@ module.exports.retrain = (username, wine, like) => {
           output: like
         }];
         profile = NN.train(profile, trainingSet);
-        return User.updateUserNN(username, profile)
+        return User.updateUserNN(username, profile.toJSON())
       } else {
         return Promise.reject('user not found');
       }
