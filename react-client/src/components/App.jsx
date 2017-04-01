@@ -308,6 +308,7 @@ class App extends React.Component {
             </div>
             <div>
               <Route exact path='/' component={Homepage}/>
+              <Route exact path='/questionnaire' component={Questionnaire}/>
               <Route path='/products' component={Products}/>
               <Route path='/product/overview' component={ProductOverviewComp}/>
               {wineRoutes.map((route, index) => (

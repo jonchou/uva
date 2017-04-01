@@ -5,39 +5,12 @@ var fbAppId = config.fbAppId;
 
 module.exports = {
 
-  apiRequest: function(search, price, callback) {
-    var options = {
-      method: 'GET',
-      url: 'https://services.wine.com/api/beta/service.svc/JSON/catalog',
-      qs: {
-        size: '50',
-        search: search,
-        filter: 'rating(85|100)+price(' + price + '|' + (price * (price/10 + 1)) + ')',
-        sort: 'rating|descending',
-        apikey: key
-      },
-      headers: {
-        'cache-control': 'no-cache'
-      },
-      json: true
-    };
-
-    request(options, function(error, response, body) {
-      if (error) {
-        console.error('Error in API request', error);
-        callback(error, null)
-      } else {
-        console.log('API body', body.Products.List.length);
-        callback(null, body.Products.List);
-      }
-    });
-  },
-
   topRed: function(price, callback) {
     var options = {
       method: 'GET',
       url: 'https://services.wine.com/api/beta/service.svc/JSON/catalog',
       qs: { 
+        state: 'CA',
         filter: 'categories(490+124)+rating(85|100)+price(' + price + '|' + (price + 10) + ')',
         size: '100',
         sort: 'popularity|descending',
@@ -63,6 +36,7 @@ module.exports = {
       method: 'GET',
       url: 'https://services.wine.com/api/beta/service.svc/JSON/catalog',
       qs: {
+        state: 'CA',
         filter: 'categories(490+125)+rating(85|100)+price(' + price + '|' + (price + 10) + ')',
         size: '100',
         sort: 'popularity|descending',
@@ -105,6 +79,35 @@ module.exports = {
       } else {
         console.log('Response from topRed function');
         callback(null, body);
+      }
+    });
+  },
+  
+  // requests below here are not currently being used, they were written/used in a previous version of this app
+  apiRequest: function(search, price, callback) {
+    var options = {
+      method: 'GET',
+      url: 'https://services.wine.com/api/beta/service.svc/JSON/catalog',
+      qs: {
+        size: '50',
+        search: search,
+        filter: 'rating(85|100)+price(' + price + '|' + (price * (price/10 + 1)) + ')',
+        sort: 'rating|descending',
+        apikey: key
+      },
+      headers: {
+        'cache-control': 'no-cache'
+      },
+      json: true
+    };
+
+    request(options, function(error, response, body) {
+      if (error) {
+        console.error('Error in API request', error);
+        callback(error, null)
+      } else {
+        console.log('API body', body.Products.List.length);
+        callback(null, body.Products.List);
       }
     });
   },

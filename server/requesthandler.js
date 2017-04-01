@@ -88,7 +88,6 @@ module.exports.search = function(req, res) {
   })
 }
 
-
 module.exports.usersUsername = function(req, res) {
   var username = req.body.username;
 
@@ -171,8 +170,7 @@ module.exports.train = function(req, res) {
       return User.updateUserNN(req.user, profile)
     })
     .then(() => {
-      // might want to change this to response to a redirect once we incorporate the form 
-      res.send('trained NN');
+      res.redirect('/');
     })
     .catch((err) => {
       console.error(err);
