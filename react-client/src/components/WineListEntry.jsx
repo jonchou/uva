@@ -12,9 +12,9 @@ var WineListEntry = ({handleClickedProductEntry, wine}) => (
      <p>Released: {wine.year}</p>
      <p>Best Price: ${wine.priceMin}</p>
    </div>
-   <div className='entryFlexItem flexItemRight'>
+   <div className='flexItemRight'>
      <p>Avg Rating: </p>
-     <h4 className='entryRating'>{wine.apiRating/20}</h4>
+     <h4>{wine.apiRating/20}</h4>
    </div>
   </div>
   </Link>

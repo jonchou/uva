@@ -7,7 +7,7 @@ var NNUtils = require('./utilities/neuralNetworkUtils.js');
 module.exports.init = function(req, res) {
   var wines = {
     top10Reds: [],
-    top10Wines: [],
+    top10Whites: [],
     topRated: [],
   };
   Product.top10Reds(function(error, topReds) {

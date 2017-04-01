@@ -2,7 +2,7 @@ import React from 'react';
 import WineListEntry from './WineListEntry.jsx';
 
 var WineList = ({handleClickedProductEntry, wines}) => (
-  <div className='bestCategory trendingCategory'>
+  <div className='bestCategory'>
     <ol>
       {wines && wines.map(wine =>
         <li key={wine._id}>
