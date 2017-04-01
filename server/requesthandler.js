@@ -34,7 +34,8 @@ module.exports.init = function(req, res) {
               res.send(wines);
             })
             .catch((err) => {
-              res.send(err);
+              res.status(500);
+              res.send('error');
             })
         }
       });
