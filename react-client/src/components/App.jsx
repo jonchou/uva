@@ -42,13 +42,6 @@ class App extends React.Component {
         1: '',
         2: ''
       },
-      products: [],
-      // reviews: [],
-      // topReds: [],
-      // topWhites: [],
-      // topRated: [],
-      // uvasChoice: [],
-      searchQuery: '',
       searchHistory: [],
       userHasSearched: false,
       userWantsLogin: false,
@@ -143,8 +136,7 @@ class App extends React.Component {
         time: Date
       }),
       success: function(data) {
-        //TODO: provide user feedback upon successful review
-        console.log('Received success submitReview AJAX', data)
+        context.getReviews(wine._id);
       },
       error: function(error) {
         console.log('Error submitReview AJAX', error)
