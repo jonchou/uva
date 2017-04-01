@@ -162,23 +162,19 @@ module.exports.likes = (req, res) => {
 }
 
 module.exports.train = function(req, res) {
-  // console.log('body: ', req.body);
   const trainingData = nnUtils.transformQuestResultsToTrainingData(req.body);
-  User.findUser(req.user)
+  return User.findUser(req.user)
     .then((user) => {
-
-    }
-
-  var trainedNN = NN.train(NN, trainingData);
-
-  User.updateUserNN 
-  // console.log(trainingData);
-
-  // for the user that is currently signed in, retrieve their neural network
-    // pass in training data to their neural network 
-    // store updated neural network in db
-
-
-  res.send('received form data');
+      const trainedNN = NN.train(user.recommendation_profile, trainingData);
+      return User.updateUserNN(req.user, trainedNN)
+    })
+    .then(() => {
+      res.send('received form data');
+      console.log('updated user\'s NN');
+    })
+    .catch((err) => {
+      console.error(err);
+      res.writeHead(500);
+      res.end();
+    })
 }
-
