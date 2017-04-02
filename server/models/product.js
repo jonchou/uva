@@ -43,26 +43,21 @@ module.exports = {
     // return db.Product.find({redORwhite:'Red Wines'}).sort({rating: -1}).limit(10)
     Product.find({redORwhite:'Red Wines'}).limit(30).sort({apiRating: -1}).exec(function(error, results){
       if(error){
-        console.log('DB FIND TOP 10 ERRROR')
-        callback(error, results)
+        callback(error, null);
       } else {
-        console.log('TOP10RED')
-        callback(error, results)
+        callback(null, results);
       }
-    })
+    });
   },
 
   top30Whites: function(callback) { //TODO: test against populated database once forcedRequest is up, or against dummy data
-
-    // return db.Product.findAsync({redORwhite:'White Wines'}).sort({rating: -1}).limit(10)
     Product.find({redORwhite:'White Wines'}).limit(30).sort({apiRating: -1}).exec(function(error, results){
       if(error){
-        callback(error, null)
+        callback(error, null);
       } else {
-        console.log('TOP10WHITE')
-        callback(null, results)
+        callback(null, results);
       }
-    })
+    });
   },
 
   storeWines(wines, callback) {

@@ -13,7 +13,6 @@ class WineListEntry extends React.Component {
   }
 
   toggleState(event) {
-    console.log(event.target.value);
     if (event.target.value === 'Like') {
       var newState = this.state.likeClass === '' ? 'selected' : '';
       this.setState({
@@ -53,14 +52,14 @@ class WineListEntry extends React.Component {
                 value="Like"
                 onClick={(event) => { this.handleButtonClick(event, 1) }}
               />
-              <span>{(this.props.wine.rating*100).toPrecision(3)}%</span>
+              <span>{(Math.floor(this.props.wine.rating*10000) / 100)}%</span>
               <input
                 className={this.state.dislikeClass}
                 type="button"
                 value="Dislike"
                 onClick={(event) => { this.handleButtonClick(event, 0) }}
               />
-              <span>{(100 - this.props.wine.rating*100).toPrecision(3)}%</span>
+              <span>{(10000 - Math.floor(this.props.wine.rating*10000)) / 100}%</span>
             </div>
           )}
         </div>

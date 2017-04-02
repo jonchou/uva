@@ -153,14 +153,24 @@ module.exports.likes = (req, res) => {
           input: likedWine.neurons, 
           output: [req.body.wine.like]
         }
-        const updatedTrainingData = user[0].recommendation_profile.push(trainingItem);
+        user[0].recommendation_profile.push(trainingItem);
+        const updatedTrainingData = user[0].recommendation_profile;
         return User.updateUserNN(req.user, updatedTrainingData)
       })
       .then(() => {
         return Like.addLike(req.user, req.body.wine._id, req.body.wine.like)
       })
       .then(() => {
-        res.end();
+        return NNUtils.recommendations(req.user)
+      })
+      .then((recommendations) => {
+        const results = recommendations.filter((wine, i) => {
+          return i < 30;
+        });
+        return Like.addLikesToWines(req.user, results);
+      })
+      .then((topRatedWithLikes) => {
+        res.send(topRatedWithLikes);
       })
       .catch((error) => {
         console.log(error);
