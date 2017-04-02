@@ -43,8 +43,6 @@ class ProductOverview extends React.Component{
         userWantsWriteReview: false,
         successfulReview: true
       })
-
-     this.props.getReviews(this.props.currentWine.wine._id);
     }
   }
 

@@ -12,7 +12,7 @@ class TopBar extends React.Component {
   }
 
   render(){
-    var signup = (<button className='flexItem flexEdge' onClick={this.props.handleUserWantsSignUp} value='signup'>Sign Up</button>);
+    // var signup = (<button className='flexItem flexEdge' onClick={this.props.handleUserWantsSignUp} value='signup'>Sign Up</button>);
     var home = (<button onClick={() => {this.props.handleClickedNavItem(-1)}} className='flexItem flexEdge' value='login'>Home</button>);
     var questionnaire = (<button className='flexItem flexEdge'>Survey</button>);
 
@@ -20,7 +20,7 @@ class TopBar extends React.Component {
       <div>
         <Link to='/'>
           <div className='flexContainer'>
-            {this.props.userWantsHomePage && !this.props.userLoggedIn ? signup : this.props.userWantsHomePage && this.props.userLoggedIn || this.props.userWantsLogin ? home : home}
+            {home}
           </div>  
         </Link>
         <Link to='/questionnaire'>

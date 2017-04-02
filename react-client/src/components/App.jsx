@@ -7,8 +7,9 @@ import TopBar from './TopBar.jsx';
 import ProductOverview from './productOverview.jsx';
 import Questionnaire from './Questionnaire.jsx';
 import HomePageWines from './HomePageWines.jsx';
-import Nav from './Nav.jsx'
-import WineList from './WineList.jsx'
+import Nav from './Nav.jsx';
+import WineList from './WineList.jsx';
+import TripleList from './TripleList.jsx';
 
 import {
   BrowserRouter as Router,
@@ -41,13 +42,6 @@ class App extends React.Component {
         1: '',
         2: ''
       },
-      products: [],
-      // reviews: [],
-      topReds: [],
-      topWhites: [],
-      topRated: [],
-      uvasChoice: [],
-      searchQuery: '',
       searchHistory: [],
       userHasSearched: false,
       userWantsLogin: false,
@@ -89,8 +83,8 @@ class App extends React.Component {
       url: '/init',
       success: function (data) {
         context.setState(() => {
-          context.state.allWines.reds.wines = data.top10Reds;
-          context.state.allWines.whites.wines = data.top10Whites;
+          context.state.allWines.reds.wines = data.top30Reds;
+          context.state.allWines.whites.wines = data.top30Whites;
           context.state.allWines.uvas.wines = data.topRated;
         })
       },
@@ -142,8 +136,7 @@ class App extends React.Component {
         time: Date
       }),
       success: function(data) {
-        //TODO: provide user feedback upon successful review
-        console.log('Received success submitReview AJAX', data)
+        context.getReviews(wine._id);
       },
       error: function(error) {
         console.log('Error submitReview AJAX', error)
@@ -260,9 +253,9 @@ class App extends React.Component {
 
     const Homepage = () => (
       <HomePageWines
-        topReds={this.state.allWines.reds.wines} 
-        topWhites={this.state.allWines.whites.wines} 
-        topRated={this.state.allWines.uvas.wines}
+        topReds={this.state.allWines.reds.wines && this.state.allWines.reds.wines.slice(0, 10)}
+        topWhites={this.state.allWines.whites.wines && this.state.allWines.whites.wines.slice(0, 10)}
+        topRated={this.state.allWines.uvas.wines && this.state.allWines.uvas.wines.slice(0, 10)}
         handleClickedProductEntry={this.handleClickedProductEntry}
         postLike={this.postLike}
       />
@@ -274,6 +267,16 @@ class App extends React.Component {
         currentWine={this.state.currentWine}
         getReviews={this.getReviews}
         submitReview={this.submitReview}
+      />
+    )
+
+    const Triplelist = (wines, choice) => (
+      <TripleList
+        first={wines.slice(0, 10)}
+        second={wines.slice(10, 20)}
+        third={wines.slice(20, 30)}
+        handleClickedProductEntry={this.handleClickedProductEntry}
+        postLike={choice ? this.postLike : undefined}
       />
     )
 
@@ -315,14 +318,9 @@ class App extends React.Component {
                 <Route
                   key={index}
                   exact path={route.path}
-                  component={() => (
-                    <WineList
-                      handleClickedProductEntry={this.handleClickedProductEntry}
-                      wines={route.wines}
-                      postLike={this.postLike}
-                      choice={route.choice}
-                    />
-                  )}
+                  component={() => {
+                    return Triplelist(route.wines, route.choice);
+                  }}
                 />
               ))}
             </div>
