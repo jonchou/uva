@@ -171,15 +171,13 @@ module.exports.likes = (req, res) => {
 }
 
 module.exports.train = function(req, res) {
-  let trainingData = NNUtils.transformQuestResultsToTrainingData(req.body);
+  const trainingData = NNUtils.transformQuestResultsToTrainingData(req.body);
   return User.findUser(req.user)
     .then((user) => {
       const updatedTrainingData = user[0].recommendation_profile;
       trainingData.forEach((preference) => {
         updatedTrainingData.push(preference);
       })
-      //const trainedNN = NN.train(user[0].recommendation_profile, trainingData);
-      //const profile = trainedNN.toJSON();
       return User.updateUserNN(req.user, updatedTrainingData)
     })
     .then(() => {
