@@ -15,6 +15,8 @@ const addNeuronToWine = (wine) => {
   return wine;
 }
 
+module.exports.addNeuronToWine = addNeuronToWine;
+
 module.exports.recommendations = (username) => {
   let profile = null;
   let wines = null;
@@ -27,9 +29,11 @@ module.exports.recommendations = (username) => {
     })
     .then((user) => {
       if (user[0]) {
-        profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
+        //profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
+        let trainingData = user[0].recommendation_profile;
+        const trainedNN = NN.createTrainedNN(trainingData);
         const sortedWines = wines.map((wine) => {
-          wine.rating = profile.activate(wine.neurons)[0];
+          wine.rating = trainedNN.activate(wine.neurons)[0];
           return wine;
         }).sort((a, b) => {
           return b.rating - a.rating;

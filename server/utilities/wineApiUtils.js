@@ -11,7 +11,7 @@ module.exports = {
       url: 'https://services.wine.com/api/beta/service.svc/JSON/catalog',
       qs: { 
         state: 'CA',
-        filter: 'categories(490+124)+rating(85|100)+price(' + price + '|' + (price + 10) + ')',
+        filter: 'categories(490+124)+rating(85|100)+price(' + price + '|' + (price + 90) + ')',
         size: '100',
         sort: 'popularity|descending',
         apikey: key
@@ -37,7 +37,7 @@ module.exports = {
       url: 'https://services.wine.com/api/beta/service.svc/JSON/catalog',
       qs: {
         state: 'CA',
-        filter: 'categories(490+125)+rating(85|100)+price(' + price + '|' + (price + 10) + ')',
+        filter: 'categories(490+125)+rating(85|100)+price(' + price + '|' + (price + 90) + ')',
         size: '100',
         sort: 'popularity|descending',
         apikey: key

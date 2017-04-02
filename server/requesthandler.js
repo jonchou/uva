@@ -34,6 +34,7 @@ module.exports.init = function(req, res) {
               res.send(wines);
             })
             .catch((err) => {
+              console.log(err);
               res.status(500);
               res.send('error');
             })
@@ -145,17 +146,24 @@ module.exports.likes = (req, res) => {
     res.status(400);
     res.end();
   } else {
-    Like.addLike(req.user, req.body.wine._id, req.body.wine.like)
-      .then(() => {
-        return NNUtils.retrain(req.user, req.body.wine, req.body.wine.like)
-      })
-      .then((response) => {
-        if (!response === 'success') {
-          res.status(500);
+    const likedWine = NNUtils.addNeuronToWine(req.body.wine);
+    User.findUser(req.user) 
+      .then((user) => {
+        const trainingItem = {
+          input: likedWine.neurons, 
+          output: [req.body.wine.like]
         }
+        const updatedTrainingData = user[0].recommendation_profile.push(trainingItem);
+        return User.updateUserNN(req.user, updatedTrainingData)
+      })
+      .then(() => {
+        return Like.addLike(req.user, req.body.wine._id, req.body.wine.like)
+      })
+      .then(() => {
         res.end();
       })
       .catch((error) => {
+        console.log(error);
         res.status(500);
         res.end();
       })
@@ -163,12 +171,16 @@ module.exports.likes = (req, res) => {
 }
 
 module.exports.train = function(req, res) {
-  const trainingData = NNUtils.transformQuestResultsToTrainingData(req.body);
+  let trainingData = NNUtils.transformQuestResultsToTrainingData(req.body);
   return User.findUser(req.user)
     .then((user) => {
-      const trainedNN = NN.train(user[0].recommendation_profile, trainingData);
-      const profile = trainedNN.toJSON();
-      return User.updateUserNN(req.user, profile)
+      const updatedTrainingData = user[0].recommendation_profile;
+      trainingData.forEach((preference) => {
+        updatedTrainingData.push(preference);
+      })
+      //const trainedNN = NN.train(user[0].recommendation_profile, trainingData);
+      //const profile = trainedNN.toJSON();
+      return User.updateUserNN(req.user, updatedTrainingData)
     })
     .then(() => {
       res.redirect('/');

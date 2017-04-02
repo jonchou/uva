@@ -16,7 +16,7 @@ module.exports.findUser = (username) => {
 }
 
 module.exports.createUser = (username, accessToken) => {
-  let profile = NN.newUserNN().toJSON();
+  let profile = [];
   return User.create({
     name: username,
     joined: new Date(),
