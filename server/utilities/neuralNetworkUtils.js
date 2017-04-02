@@ -29,7 +29,6 @@ module.exports.recommendations = (username) => {
     })
     .then((user) => {
       if (user[0]) {
-        //profile = synaptic.Network.fromJSON(user[0].recommendation_profile);
         let trainingData = user[0].recommendation_profile;
         const trainedNN = NN.createTrainedNN(trainingData);
         const sortedWines = wines.map((wine) => {
