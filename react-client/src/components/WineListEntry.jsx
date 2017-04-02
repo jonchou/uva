@@ -53,12 +53,14 @@ class WineListEntry extends React.Component {
                 value="Like"
                 onClick={(event) => { this.handleButtonClick(event, 1) }}
               />
+              <span>{(this.props.wine.rating*100).toPrecision(3)}%</span>
               <input
                 className={this.state.dislikeClass}
                 type="button"
                 value="Dislike"
                 onClick={(event) => { this.handleButtonClick(event, 0) }}
               />
+              <span>{(100 - this.props.wine.rating*100).toPrecision(3)}%</span>
             </div>
           )}
         </div>
