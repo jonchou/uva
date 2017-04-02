@@ -180,6 +180,8 @@ class App extends React.Component {
   }
 
   postLike (wine, likeOrDislike) {
+    var context = this;
+    var allWines = this.state.allWines
     wine.like = likeOrDislike;
 
     $.ajax({
@@ -190,7 +192,10 @@ class App extends React.Component {
         wine: wine
       }),
       success: function(data) {
-        console.log('data returned by postLike', data)
+        allWines.uvas.wines = data;
+        context.setState({
+          allWines: allWines
+        });
       },
       error: function(err) {
         console.error(err);
@@ -294,7 +299,7 @@ class App extends React.Component {
                   handleClickedNavItem={this.handleClickedNavItem}
                 />
               </Link>
-              <div className = 'heroImageContainer'>
+              <div>
                 <div className = 'heroContentWrapper'>
                   Uva 2.Grape
                   <Search className ='SearchBar' search={this.search} />
