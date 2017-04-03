@@ -231,7 +231,7 @@ button:hover {
   justify-content: center;
 }
 
-.flexItem .flexEdge{
+.flexItem, .flexEdge{
   flex: auto;
   flex-grow: 1;
 }

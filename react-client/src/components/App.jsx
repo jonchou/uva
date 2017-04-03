@@ -44,14 +44,7 @@ class App extends React.Component {
       },
       searchHistory: [],
       userHasSearched: false,
-      userWantsLogin: false,
-      userLoggedIn: false,
-      username: '',
-      userID: '',
-      invalidPasswordAttempt: false,
-      invalidUsername: false,
       userWantsProductList: false,
-      userClickedEntry: false,
       currentWine: null,
     }
 
@@ -292,10 +285,6 @@ class App extends React.Component {
             <div className = 'topBackgroundImageWrapper'>
               <Link to='/'>  
                 <TopBar 
-                  username={this.state.username} 
-                  userLoggedIn={this.state.userLoggedIn} 
-                  handleUserWantsLogin={this.handleUserWantsLogin} 
-                  userHasSearched={this.state.userHasSearched}
                   handleClickedNavItem={this.handleClickedNavItem}
                 />
               </Link>
