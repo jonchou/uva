@@ -290,7 +290,7 @@ class App extends React.Component {
               </Link>
               <div>
                 <div className = 'heroContentWrapper'>
-                  Uva 2.Grape
+                  <h1>Uva 2.Grape</h1>
                   <Search className ='SearchBar' search={this.search} />
                 </div>
               </div>    

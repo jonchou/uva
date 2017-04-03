@@ -6,16 +6,12 @@ import {
 } from 'react-router-dom';
 
 var TopBar = ({handleClickedNavItem}) => (
-  <div>
+  <div className='flexContainer'>
     <Link to='/'>
-      <div className='flexContainer'>
-        <button onClick={() => {handleClickedNavItem(-1)}}>Home</button>
-      </div>
+      <button style={{"margin-right": "15px"}} onClick={() => {handleClickedNavItem(-1)}}>Home</button>
     </Link>
     <Link to='/questionnaire'>
-      <div className='flexContainer'>
-        <button onClick={() => {handleClickedNavItem(-1)}}>Survey</button>
-      </div>
+      <button onClick={() => {handleClickedNavItem(-1)}}>Survey</button>
     </Link>
   </div>
 );
